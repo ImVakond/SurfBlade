@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://buok0w254t0wh"]
+
+[ext_resource type="Script" uid="uid://brssn1of78q8a" path="res://player.gd" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://dudbeybe481tr" path="res://gravity.gd" id="2_onrkg"]
+[ext_resource type="Script" uid="uid://cbxtqhmhq4ogv" path="res://move_and_slide.gd" id="3_i3pqv"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4flbx"]
+
+[node name="Player" type="CharacterBody3D"]
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+motion_mode = 1
+script = ExtResource("1_4flbx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_sh265")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_4flbx")
+
+[node name="CameraHolder" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="Camera" type="Camera3D" parent="CameraHolder"]
+unique_name_in_owner = true
+fov = 70.0
+
+[node name="Gravity" type="Node" parent="."]
+script = ExtResource("2_onrkg")
+enabled = false
+metadata/_custom_type_script = "uid://dudbeybe481tr"
+
+[node name="MoveAndSlide" type="Node" parent="."]
+script = ExtResource("3_i3pqv")
+metadata/_custom_type_script = "uid://cbxtqhmhq4ogv"
