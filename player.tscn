@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://buok0w254t0wh"]
+[gd_scene load_steps=13 format=3 uid="uid://buok0w254t0wh"]
 
 [ext_resource type="Script" uid="uid://brssn1of78q8a" path="res://player.gd" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://dudbeybe481tr" path="res://gravity.gd" id="2_onrkg"]
@@ -8,6 +8,59 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4flbx"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_i3pqv"]
+radius = 2.02626
+
+[sub_resource type="Animation" id="Animation_i3pqv"]
+resource_name = "Attack"
+length = 0.3
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AttackCollider:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_hqtel"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AttackCollider:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hqtel"]
+_data = {
+&"Attack": SubResource("Animation_i3pqv"),
+&"RESET": SubResource("Animation_hqtel")
+}
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_i3pqv"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_i3pqv"]
+font_size = 64
+
+[sub_resource type="GDScript" id="GDScript_i3pqv"]
+script/source = "extends Label
+
+func _process(_delta : float) -> void:
+	text = str(owner.velocity.x) + \"\\n\" + str(owner.velocity.z)
+"
+
 [node name="Player" type="CharacterBody3D"]
 axis_lock_angular_x = true
 axis_lock_angular_y = true
@@ -16,6 +69,7 @@ motion_mode = 1
 script = ExtResource("1_4flbx")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+layers = 0
 mesh = SubResource("CapsuleMesh_sh265")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -26,7 +80,25 @@ unique_name_in_owner = true
 
 [node name="Camera" type="Camera3D" parent="CameraHolder"]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.560683, 0.172314)
 fov = 70.0
+
+[node name="AttackArea" type="Area3D" parent="CameraHolder" groups=["PlayerDamage"]]
+
+[node name="AttackCollider" type="CollisionShape3D" parent="CameraHolder/AttackArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.88126)
+shape = SubResource("SphereShape3D_i3pqv")
+disabled = true
+
+[node name="AttackAnim" type="AnimationPlayer" parent="CameraHolder/AttackArea"]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_hqtel")
+}
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CameraHolder/AttackArea"]
+transform = Transform3D(0.1, 0, 0, 0, 1, 0, 0, 0, 0.1, 0.327149, 0, -0.511155)
+mesh = SubResource("CylinderMesh_i3pqv")
 
 [node name="Gravity" type="Node" parent="."]
 script = ExtResource("2_onrkg")
@@ -36,3 +108,21 @@ metadata/_custom_type_script = "uid://dudbeybe481tr"
 [node name="MoveAndSlide" type="Node" parent="."]
 script = ExtResource("3_i3pqv")
 metadata/_custom_type_script = "uid://cbxtqhmhq4ogv"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_right = 1926.0
+offset_bottom = 862.0
+text = "o"
+label_settings = SubResource("LabelSettings_i3pqv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer"]
+offset_top = 64.0
+offset_right = 40.0
+offset_bottom = 87.0
+script = SubResource("GDScript_i3pqv")
+
+[connection signal="area_entered" from="CameraHolder/AttackArea" to="." method="_on_attack_area_area_entered"]

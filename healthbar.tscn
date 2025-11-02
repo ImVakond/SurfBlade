@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://dh4r1g6730v4m"]
+
+[ext_resource type="Script" uid="uid://dkoe4r6m8nbh1" path="res://health_bar.gd" id="1_iywrq"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_hx648"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_iywrq"]
+viewport_path = NodePath("ProgressBarViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3u6gp"]
+resource_local_to_scene = true
+shading_mode = 0
+albedo_color = Color(1, 1, 1, 0)
+albedo_texture = SubResource("ViewportTexture_iywrq")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1g57s"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0, 0, 0, 1)
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7pf6h"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(1, 0, 0, 1)
+corner_detail = 6
+
+[node name="HealthBar" type="MeshInstance3D"]
+transform = Transform3D(2.87319, 0, 0, 0, 0.0541109, 0, 0, 0, 0.45289, 0, 0, 0)
+mesh = SubResource("PlaneMesh_hx648")
+surface_material_override/0 = SubResource("StandardMaterial3D_3u6gp")
+script = ExtResource("1_iywrq")
+
+[node name="ProgressBarViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(480, 99)
+
+[node name="Bar" type="ProgressBar" parent="ProgressBarViewport"]
+unique_name_in_owner = true
+offset_left = -6.0
+offset_top = -5.0
+offset_right = 490.0
+offset_bottom = 105.0
+theme_override_styles/background = SubResource("StyleBoxFlat_1g57s")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7pf6h")
+max_value = 50.0
+value = 25.0
+show_percentage = false

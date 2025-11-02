@@ -1,21 +1,23 @@
 extends CharacterBody3D
 
 
-const ACCELARATION = 5.0
+const ACCELARATION = 80
 const JUMP_VELOCITY = 8
-const MAX_SPEED = 40.0
-var current_speed : float = 0
+const SPEED = 20.0
+var target_speed : float = 0
 
-@onready var cameraholder = %CameraHolder
+@onready var cameraholder := %CameraHolder
+@onready var attack_anim := %AttackAnim
 
 func _physics_process(delta : float) -> void:
 	if Input.is_action_pressed("forward"):
-		current_speed = clampf(current_speed+ACCELARATION,0,MAX_SPEED)
+		target_speed = 1
+	elif Input.is_action_pressed("backward"):
+		target_speed = -1
 	else:
-		current_speed = clampf(current_speed-ACCELARATION/3,0,MAX_SPEED)
-	var direction = transform.basis * Vector3(0, 0, -current_speed)
-	velocity.x = direction.x
-	velocity.z = direction.z
+		target_speed = clampf(target_speed-ACCELARATION,0,SPEED)
+	var target_direction : Vector3 = transform.basis * Vector3(0, 0, -target_speed * SPEED) + Vector3(0,velocity.y,0)
+	velocity = velocity.move_toward(target_direction,ACCELARATION * delta)
 
 func _input(event : InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -23,3 +25,10 @@ func _input(event : InputEvent) -> void:
 		rotate_object_local(Vector3(0,1,0),-event.relative.x / 270)
 	if event.is_action_pressed("Jump") and (is_on_floor() or global_position.y < 2):
 		velocity.y = JUMP_VELOCITY
+	if event.is_action_pressed("Attack"):
+		attack_anim.play("Attack")
+
+func _on_attack_area_area_entered(area : Area3D) -> void:
+	if area is Hitbox and area.enemy:
+		##TODO: a két hitbox pozíciója helyett a kamera controller szögéből kell kiszámolni a knockbacket
+		velocity += (global_position-area.global_position).normalized() * 50 * Vector3(1,0.2,1)
