@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://b01axphphb3sk"]
+[gd_scene load_steps=13 format=3 uid="uid://b01axphphb3sk"]
 
 [ext_resource type="Script" uid="uid://b321veh5c3xks" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://buok0w254t0wh" path="res://player.tscn" id="1_ig7tw"]
 [ext_resource type="Shader" uid="uid://bqvkpetder5il" path="res://ocean.gdshader" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://cighyvs18l5tc" path="res://enviroment.gd" id="3_272bh"]
 [ext_resource type="Environment" uid="uid://drbxgywq0qt61" path="res://nightsky.tres" id="4_7mycd"]
+[ext_resource type="PackedScene" uid="uid://g0uja46i3wmj" path="res://enemy_harphish.tscn" id="6_7mycd"]
 
 [sub_resource type="GDScript" id="GDScript_h2yge"]
 resource_name = "asd"
@@ -98,7 +99,6 @@ sky_mode = 1
 [node name="Moon" type="DirectionalLight3D" parent="Enviroment"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 0.304033, 0.952661, 0, -0.952661, 0.304033, 0, 0, 0)
-visible = false
 light_color = Color(0.905882, 1, 1, 1)
 light_energy = 0.5
 light_indirect_energy = 0.0
@@ -106,3 +106,6 @@ sky_mode = 2
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.730162, 0.683274, 0, -0.683274, 0.730162, 0, 11.3468, 7.08274)
+
+[node name="EnemyHarphish" parent="." instance=ExtResource("6_7mycd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.60895, 1.19209e-07, -16.6937)

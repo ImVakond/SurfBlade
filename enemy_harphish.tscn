@@ -1,0 +1,49 @@
+[gd_scene load_steps=9 format=3 uid="uid://g0uja46i3wmj"]
+
+[ext_resource type="Script" uid="uid://bb7oye8qve2pw" path="res://hitbox.gd" id="1_ouwc6"]
+[ext_resource type="PackedScene" uid="uid://dh4r1g6730v4m" path="res://healthbar.tscn" id="2_t2eha"]
+[ext_resource type="Material" uid="uid://uau5jm8slqrd" path="res://particle_material.tres" id="3_nu728"]
+[ext_resource type="BoxMesh" uid="uid://bf12t5tj44mei" path="res://particle_pass.tres" id="4_yfwn8"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s6hh6"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_272bh"]
+viewport_path = NodePath("ProgressBarViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3bqhh"]
+resource_local_to_scene = true
+shading_mode = 0
+albedo_color = Color(1, 1, 1, 0)
+albedo_texture = SubResource("ViewportTexture_272bh")
+
+[sub_resource type="SphereMesh" id="SphereMesh_ouwc6"]
+
+[node name="EnemyHarphish" type="Node3D"]
+
+[node name="Hitbox" type="Area3D" parent="." node_paths=PackedStringArray("Collider", "healthbar", "particles")]
+script = ExtResource("1_ouwc6")
+Collider = NodePath("HitboxCol")
+healthbar = NodePath("HealthBar")
+particles = NodePath("Particles")
+max_health = 1.0
+
+[node name="HitboxCol" type="CollisionShape3D" parent="Hitbox"]
+shape = SubResource("CapsuleShape3D_s6hh6")
+
+[node name="HealthBar" parent="Hitbox" instance=ExtResource("2_t2eha")]
+transform = Transform3D(2.87319, 0, 0, 0, 0.0541109, 0, 0, 0, 0.45289, 0, 1.38924, 0)
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3bqhh")
+
+[node name="Particles" type="GPUParticles3D" parent="Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0695744, 0)
+emitting = false
+amount = 40
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+process_material = ExtResource("3_nu728")
+draw_pass_1 = ExtResource("4_yfwn8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_ouwc6")

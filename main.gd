@@ -12,4 +12,4 @@ func _ready() -> void:
 		await get_tree().create_timer(0.1).timeout
 		var enemy = BASIC_ENEMY.instantiate()
 		enemy.global_position = Vector3(randi_range(-50,50),1,randi_range(-50,50))
-		call_deferred("add_child",enemy)
+		#call_deferred("add_child",enemy)

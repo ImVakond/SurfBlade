@@ -25,10 +25,13 @@ func _input(event : InputEvent) -> void:
 		rotate_object_local(Vector3(0,1,0),-event.relative.x / 270)
 	if event.is_action_pressed("Jump") and (is_on_floor() or global_position.y < 2):
 		velocity.y = JUMP_VELOCITY
-	if event.is_action_pressed("Attack"):
-		attack_anim.play("Attack")
+
 
 func _on_attack_area_area_entered(area : Area3D) -> void:
 	if area is Hitbox and area.enemy:
+		var pitch = cameraholder.global_rotation.x
+		var yaw = cameraholder.global_rotation.y
 		##TODO: a két hitbox pozíciója helyett a kamera controller szögéből kell kiszámolni a knockbacket
-		velocity += (global_position-area.global_position).normalized() * 50 * Vector3(1,0.2,1)
+		#velocity += (global_position-area.global_position).normalized() * 50 * Vector3(1,0.2,1)
+		velocity +=  50 * Vector3(cos(pitch) * sin(yaw),-sin(pitch) / 5.0,cos(pitch) * cos(yaw))
+		

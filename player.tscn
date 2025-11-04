@@ -1,7 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://buok0w254t0wh"]
+[gd_scene load_steps=15 format=3 uid="uid://buok0w254t0wh"]
 
 [ext_resource type="Script" uid="uid://brssn1of78q8a" path="res://player.gd" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://dudbeybe481tr" path="res://gravity.gd" id="2_onrkg"]
+[ext_resource type="Script" uid="uid://6bj42mo0apx7" path="res://weapon_state_machine.gd" id="2_sweqy"]
+[ext_resource type="Script" uid="uid://b0wdhtbjsknqa" path="res://bat.gd" id="3_2hs0m"]
 [ext_resource type="Script" uid="uid://cbxtqhmhq4ogv" path="res://move_and_slide.gd" id="3_i3pqv"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
@@ -99,6 +101,12 @@ libraries = {
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CameraHolder/AttackArea"]
 transform = Transform3D(0.1, 0, 0, 0, 1, 0, 0, 0, 0.1, 0.327149, 0, -0.511155)
 mesh = SubResource("CylinderMesh_i3pqv")
+
+[node name="WeaponStateMachine" type="Node" parent="."]
+script = ExtResource("2_sweqy")
+
+[node name="Blade" type="Node" parent="WeaponStateMachine"]
+script = ExtResource("3_2hs0m")
 
 [node name="Gravity" type="Node" parent="."]
 script = ExtResource("2_onrkg")
