@@ -8,6 +8,9 @@ var target_speed : float = 0
 
 @onready var cameraholder := %CameraHolder
 @onready var attack_anim := %AttackAnim
+@onready var weapon_state_machine: Node = %WeaponStateMachine
+@onready var blade_mesh: MeshInstance3D = %BladeMesh
+@onready var hook_mesh: MeshInstance3D = %HookMesh
 
 func _physics_process(delta : float) -> void:
 	if Input.is_action_pressed("forward"):

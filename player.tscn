@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://buok0w254t0wh"]
+[gd_scene load_steps=17 format=3 uid="uid://buok0w254t0wh"]
 
 [ext_resource type="Script" uid="uid://brssn1of78q8a" path="res://player.gd" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://dudbeybe481tr" path="res://gravity.gd" id="2_onrkg"]
 [ext_resource type="Script" uid="uid://6bj42mo0apx7" path="res://weapon_state_machine.gd" id="2_sweqy"]
 [ext_resource type="Script" uid="uid://b0wdhtbjsknqa" path="res://bat.gd" id="3_2hs0m"]
 [ext_resource type="Script" uid="uid://cbxtqhmhq4ogv" path="res://move_and_slide.gd" id="3_i3pqv"]
+[ext_resource type="Script" uid="uid://dwju4ladeygwc" path="res://hook.gd" id="4_2hs0m"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
 
@@ -53,6 +54,8 @@ _data = {
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_i3pqv"]
 
+[sub_resource type="BoxMesh" id="BoxMesh_2hs0m"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_i3pqv"]
 font_size = 64
 
@@ -98,15 +101,29 @@ libraries = {
 &"": SubResource("AnimationLibrary_hqtel")
 }
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CameraHolder/AttackArea"]
+[node name="Weapons" type="Node3D" parent="CameraHolder"]
+
+[node name="BladeMesh" type="MeshInstance3D" parent="CameraHolder/Weapons"]
+unique_name_in_owner = true
 transform = Transform3D(0.1, 0, 0, 0, 1, 0, 0, 0, 0.1, 0.327149, 0, -0.511155)
 mesh = SubResource("CylinderMesh_i3pqv")
+skeleton = NodePath("../../AttackArea")
+
+[node name="HookMesh" type="MeshInstance3D" parent="CameraHolder/Weapons"]
+unique_name_in_owner = true
+transform = Transform3D(0.2379735, 0, 0, 0, 0.16608793, 0, 0, 0, 0.1, 0.31501696, 0.52302665, -0.511155)
+mesh = SubResource("BoxMesh_2hs0m")
+skeleton = NodePath("../../AttackArea")
 
 [node name="WeaponStateMachine" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("2_sweqy")
 
 [node name="Blade" type="Node" parent="WeaponStateMachine"]
 script = ExtResource("3_2hs0m")
+
+[node name="Hook" type="Node" parent="WeaponStateMachine"]
+script = ExtResource("4_2hs0m")
 
 [node name="Gravity" type="Node" parent="."]
 script = ExtResource("2_onrkg")
