@@ -2,6 +2,7 @@ extends Node
 class_name StateMachine 
 
 @onready var state: State = get_child(0)
+signal switched(to_state : State)
 
 func _ready() -> void:
 	for state_node: State in find_children("*", "State"):
@@ -11,8 +12,9 @@ func _ready() -> void:
 	state.enter("")
 
 func _process(delta: float) -> void:
-	state._update(delta)
-
+	state.update(delta)
+func _physics_process(delta : float) -> void:
+	state.physics_update(delta)
 func _input(event : InputEvent) -> void:
 	state.handle_input(event)
 
@@ -25,5 +27,6 @@ func _transition_to_next_state(target_state_path: String,data : Dictionary = {})
 	state.exit()
 	state.set_block_signals(true)
 	state = get_node(target_state_path)
+	switched.emit(state)
 	state.set_block_signals(false)
 	state.enter(previous_state_path,data)

@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://bxt06cc0ci6ul"]
+
+[ext_resource type="Script" uid="uid://dwulr6omg6fky" path="res://hook_body.gd" id="1_p2j4v"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_vsdj1"]
+radius = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p2j4v"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ewd8b"]
+material = SubResource("StandardMaterial3D_p2j4v")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_p2j4v"]
+radius = 0.01
+
+[node name="HookBody" type="CharacterBody3D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_p2j4v")
+
+[node name="HookArea" type="Area3D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="Collision" type="CollisionShape3D" parent="HookArea"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+shape = SubResource("SphereShape3D_vsdj1")
+
+[node name="Mesh" type="MeshInstance3D" parent="HookArea"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+mesh = SubResource("SphereMesh_ewd8b")
+
+[node name="Timer" type="Timer" parent="HookArea"]
+wait_time = 0.8
+one_shot = true
+autostart = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_p2j4v")
+disabled = true
+
+[connection signal="body_entered" from="HookArea" to="." method="_on_hook_area_body_entered"]
+[connection signal="timeout" from="HookArea/Timer" to="." method="_on_timer_timeout"]

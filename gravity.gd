@@ -9,7 +9,7 @@ class_name Gravity
 
 func _physics_process(delta : float) -> void:
 	if parent.global_position.y > 1 or parent.is_on_floor():
-		parent.velocity += parent.get_gravity() * delta
+		parent.velocity += parent.get_gravity() * delta * 2
 		parent.global_position.y = max(parent.global_position.y,1)
 	else:
 		parent.velocity.y = max(parent.velocity.y,0)

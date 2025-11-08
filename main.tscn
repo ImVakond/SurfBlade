@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b01axphphb3sk"]
+[gd_scene load_steps=16 format=3 uid="uid://b01axphphb3sk"]
 
 [ext_resource type="Script" uid="uid://b321veh5c3xks" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://buok0w254t0wh" path="res://player.tscn" id="1_ig7tw"]
@@ -29,9 +29,9 @@ metadata/_preview_in_3d_space_ = true
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_h2yge"]
 width = 2000
 height = 2000
-noise = SubResource("FastNoiseLite_0xm2m")
 seamless = true
 bump_strength = 1.5
+noise = SubResource("FastNoiseLite_0xm2m")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h2yge"]
 render_priority = 0
@@ -46,7 +46,12 @@ exposure_multiplier = 1.566
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7mycd"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7mycd"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.568627)
+
 [sub_resource type="BoxMesh" id="BoxMesh_272bh"]
+material = SubResource("StandardMaterial3D_7mycd")
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_1bvp3")
@@ -115,7 +120,7 @@ transform = Transform3D(1, 0, 0, 0, 0.730162, 0.683274, 0, -0.683274, 0.730162, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.60895, 1.19209e-07, -16.6937)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(0.7202727, 0, 4.6516, 0, 18.05645, 0, -0.693691, 0, 4.829846, 0, 9.066777, 0)
+transform = Transform3D(0.720273, 0, 4.6516, 0, 18.0564, 0, -0.693691, 0, 4.82985, 0, 9.06678, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("BoxShape3D_7mycd")

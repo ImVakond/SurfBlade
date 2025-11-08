@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://bmywilibhhjqb"]
+
+[ext_resource type="Script" uid="uid://b6ug6pyh540am" path="res://item.gd" id="1_tnite"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vpy52"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_tnite"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tnite"]
+radius = 1.5
+
+[node name="Item" type="RigidBody3D"]
+script = ExtResource("1_tnite")
+
+[node name="Collider" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_vpy52")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_tnite")
+
+[node name="Label" type="Label3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.971344, 0)
+billboard = 1
+no_depth_test = true
+fixed_size = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 1
+modulate = Color(1, 1, 0, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "E to pick up"
+font_size = 16
+outline_size = 1
+
+[node name="ItemArea" type="Area3D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ItemArea"]
+shape = SubResource("SphereShape3D_tnite")
+
+[node name="InputStorage" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.1
+one_shot = true
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="input_event" from="ItemArea" to="." method="_on_area_3d_input_event"]
+[connection signal="mouse_entered" from="ItemArea" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="ItemArea" to="." method="_on_area_3d_mouse_exited"]

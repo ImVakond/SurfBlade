@@ -9,13 +9,14 @@ class_name Hitbox
 
 var enemy : bool = true
 
+signal died
+
 var health = 1.0:
 	set(value):
 		health = value
 		healthbar.set_health(health,max_health)
 		if health <= 0:
-			get_parent().queue_free()
-
+			emit_signal("died")
 func _ready() -> void:
 	area_entered.connect(on_area_entered)
 	health = max_health
