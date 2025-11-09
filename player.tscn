@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://buok0w254t0wh"]
+[gd_scene load_steps=22 format=3 uid="uid://buok0w254t0wh"]
 
 [ext_resource type="Script" uid="uid://brssn1of78q8a" path="res://player.gd" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://dudbeybe481tr" path="res://gravity.gd" id="2_onrkg"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" uid="uid://dwju4ladeygwc" path="res://hook.gd" id="4_2hs0m"]
 [ext_resource type="Script" uid="uid://bi38pv7wcf8qu" path="res://movement_state_machine.gd" id="5_dw050"]
 [ext_resource type="Script" uid="uid://bqo105xxgk6xf" path="res://onboard.gd" id="6_b26j0"]
+[ext_resource type="Script" uid="uid://bmr4ygcr503u1" path="res://onboardjump.gd" id="7_n7ghd"]
+[ext_resource type="Script" uid="uid://brkrto575lmsh" path="res://controls.gd" id="9_b26j0"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
 
@@ -67,7 +69,7 @@ func _on_weapon_state_machine_switched(state : State) -> void:
 	for child in get_children():
 		child.visible = false
 	match state.name:
-		\"Blade\":
+		\"Attack\":
 			blade_mesh.visible = true
 		\"Hook\":
 			hook_mesh.visible = true
@@ -150,7 +152,7 @@ debug_shape_thickness = 5
 unique_name_in_owner = true
 script = ExtResource("2_sweqy")
 
-[node name="Blade" type="Node" parent="WeaponStateMachine"]
+[node name="Attack" type="Node" parent="WeaponStateMachine"]
 script = ExtResource("3_2hs0m")
 
 [node name="Hook" type="Node" parent="WeaponStateMachine"]
@@ -161,6 +163,10 @@ script = ExtResource("5_dw050")
 
 [node name="Onboard" type="Node" parent="MovementStateMachine"]
 script = ExtResource("6_b26j0")
+metadata/_custom_type_script = "uid://eiklno1g3x35"
+
+[node name="Onboardjump" type="Node" parent="MovementStateMachine"]
+script = ExtResource("7_n7ghd")
 metadata/_custom_type_script = "uid://eiklno1g3x35"
 
 [node name="Gravity" type="Node" parent="."]
@@ -183,10 +189,20 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="CanvasLayer"]
-offset_top = 64.0
-offset_right = 40.0
-offset_bottom = 87.0
+offset_left = 1879.0
+offset_right = 1919.0
+offset_bottom = 23.0
+horizontal_alignment = 2
 script = SubResource("GDScript_i3pqv")
+
+[node name="Controls" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 2.0
+offset_right = 281.0
+offset_bottom = 1075.0
+vertical_alignment = 1
+script = ExtResource("9_b26j0")
 
 [connection signal="area_entered" from="CameraHolder/AttackArea" to="." method="_on_attack_area_area_entered"]
 [connection signal="switched" from="WeaponStateMachine" to="CameraHolder/Weapons" method="_on_weapon_state_machine_switched"]
+[connection signal="switched" from="WeaponStateMachine" to="CanvasLayer/Controls" method="_on_weapon_state_machine_switched"]

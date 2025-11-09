@@ -4,6 +4,7 @@ var active_hook : CharacterBody3D = null
 
 const HOOK_BODY = preload("uid://bxt06cc0ci6ul")
 
+
 func _physics_process(_delta : float) -> void:
 	if active_hook and active_hook.hooked:
 		owner.velocity = (active_hook.global_position - owner.global_position).normalized() * 80
@@ -21,11 +22,11 @@ func handle_input(event : InputEvent) -> void:
 			hook.connect("time_exceeded",get_used_up)
 		else:
 			get_used_up()
-	elif event.is_action_pressed("left") and !active_hook:
+	elif event.is_action_pressed("Throw") and !active_hook:
 		get_used_up()
 
 func get_used_up() -> void:
 	if active_hook:
 		active_hook.queue_free()
 		active_hook = null
-	switch("Blade")
+	switch("Attack")

@@ -7,7 +7,7 @@ extends RigidBody3D
 func _ready() -> void:
 	await get_tree().create_timer(5).timeout
 	queue_free()
-func _process(delta : float) -> void:
+func _process(_delta : float) -> void:
 	label.visible = item_area == Global.player.targeted_area
 	
 	if label.visible and !input_storage.is_stopped():
