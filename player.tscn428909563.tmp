@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://buok0w254t0wh"]
+[gd_scene load_steps=23 format=3 uid="uid://buok0w254t0wh"]
 
 [ext_resource type="Script" uid="uid://brssn1of78q8a" path="res://player.gd" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://dudbeybe481tr" path="res://gravity.gd" id="2_onrkg"]
@@ -56,24 +56,6 @@ _data = {
 &"Attack": SubResource("Animation_i3pqv"),
 &"RESET": SubResource("Animation_hqtel")
 }
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_nvl01"]
-size = Vector3(1.18945, 2.24243, 0.490234)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nvl01"]
-transparency = 1
-albedo_color = Color(1, 0.498039, 0.470588, 0.509804)
-
-[sub_resource type="BoxMesh" id="BoxMesh_ivps1"]
-material = SubResource("StandardMaterial3D_nvl01")
-
-[sub_resource type="GDScript" id="GDScript_nvl01"]
-script/source = "extends MeshInstance3D
-
-
-func _process(_delta : float) -> void:
-	visible = !get_parent().disabled
-"
 
 [sub_resource type="GDScript" id="GDScript_2hs0m"]
 resource_name = "WeaponMeshManager"
@@ -137,31 +119,12 @@ fov = 70.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.88126)
 shape = SubResource("SphereShape3D_i3pqv")
 disabled = true
-debug_color = Color(0, 0.466667, 0.54902, 0.243137)
 
 [node name="AttackAnim" type="AnimationPlayer" parent="CameraHolder/AttackArea"]
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_hqtel")
 }
-
-[node name="ParryBlock" type="Area3D" parent="CameraHolder"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.22977)
-collision_layer = 2
-collision_mask = 2
-
-[node name="ParryCollision" type="CollisionShape3D" parent="CameraHolder/ParryBlock"]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.352183)
-shape = SubResource("BoxShape3D_nvl01")
-disabled = true
-
-[node name="ParryMesh" type="MeshInstance3D" parent="CameraHolder/ParryBlock/ParryCollision"]
-transform = Transform3D(1.24824, 0, 0, 0, 1.73315, 0, 0, 0, 0.278928, 0, 0.230224, 0.00592083)
-visible = false
-mesh = SubResource("BoxMesh_ivps1")
-skeleton = NodePath("../..")
-script = SubResource("GDScript_nvl01")
 
 [node name="Weapons" type="Node3D" parent="CameraHolder"]
 script = SubResource("GDScript_2hs0m")
@@ -223,8 +186,7 @@ metadata/_custom_type_script = "uid://cbxtqhmhq4ogv"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Crosshair" type="Label" parent="CanvasLayer"]
-unique_name_in_owner = true
+[node name="Label" type="Label" parent="CanvasLayer"]
 offset_right = 1926.0
 offset_bottom = 1071.0
 text = "o"

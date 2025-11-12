@@ -4,7 +4,6 @@ signal time_exceeded
 signal hooked
 @onready var direction : Vector3 = transform.basis * Vector3(0, 0, -80)
 
-var asd = 0
 func _process(_delta : float) -> void:
 	velocity = direction
 	move_and_slide()

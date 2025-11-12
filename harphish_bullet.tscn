@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://djsy4i2ta2uo2"]
+
+[ext_resource type="Script" uid="uid://cyrysihyl1pes" path="res://harphish_bullet.gd" id="1_qqpij"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lxvql"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ni117"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pm3a3"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="HarphishBullet" type="CharacterBody3D"]
+script = ExtResource("1_qqpij")
+
+[node name="Col" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_lxvql")
+disabled = true
+
+[node name="HarphishBulletArea" type="Area3D" parent="."]
+
+[node name="Mesh" type="MeshInstance3D" parent="HarphishBulletArea"]
+mesh = SubResource("BoxMesh_ni117")
+
+[node name="Collider" type="CollisionShape3D" parent="HarphishBulletArea"]
+shape = SubResource("BoxShape3D_pm3a3")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+ignore_time_scale = true
+
+[connection signal="body_entered" from="HarphishBulletArea" to="." method="_on_hook_area_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

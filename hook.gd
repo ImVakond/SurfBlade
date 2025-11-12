@@ -4,7 +4,10 @@ extends State
 const HOOK_BODY = preload("uid://bxt06cc0ci6ul")
 
 
-	
+func enter(last: String, data : Dictionary = {}) -> void:
+	owner.crosshair.text = "+"
+	owner.controllabel.change({"Right Click" : ""})
+
 func handle_input(event : InputEvent) -> void:
 	if event.is_action_pressed("Attack"):
 		if !owner.active_hook:
