@@ -12,8 +12,10 @@ const SPEED = 20.0
 @onready var hook_mesh: MeshInstance3D = %HookMesh
 @onready var targeter : RayCast3D = %Targeter
 @onready var controllabel : Label = %Controls
+@onready var movement_state_machine: Node = %MovementStateMachine
 
 var targeted_area : Area3D = null
+var active_hook : CharacterBody3D = null
 
 func _physics_process(_delta : float) -> void:
 	if targeter.is_colliding():

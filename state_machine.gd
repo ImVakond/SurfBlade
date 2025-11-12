@@ -22,7 +22,7 @@ func _transition_to_next_state(target_state_path: String,data : Dictionary = {})
 	if not has_node(target_state_path):
 		printerr(owner.name + ": Trying to transition to state " + target_state_path + " but it does not exist.")
 		return
-
+	
 	var previous_state_path := state.name
 	state.exit()
 	state.set_block_signals(true)
@@ -30,3 +30,4 @@ func _transition_to_next_state(target_state_path: String,data : Dictionary = {})
 	switched.emit(state)
 	state.set_block_signals(false)
 	state.enter(previous_state_path,data)
+	print(state)

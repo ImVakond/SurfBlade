@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://buok0w254t0wh"]
+[gd_scene load_steps=23 format=3 uid="uid://buok0w254t0wh"]
 
 [ext_resource type="Script" uid="uid://brssn1of78q8a" path="res://player.gd" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://dudbeybe481tr" path="res://gravity.gd" id="2_onrkg"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://bi38pv7wcf8qu" path="res://movement_state_machine.gd" id="5_dw050"]
 [ext_resource type="Script" uid="uid://bqo105xxgk6xf" path="res://onboard.gd" id="6_b26j0"]
 [ext_resource type="Script" uid="uid://bmr4ygcr503u1" path="res://onboardjump.gd" id="7_n7ghd"]
+[ext_resource type="Script" uid="uid://ds33y5k5nxgsx" path="res://hooked.gd" id="8_nvl01"]
 [ext_resource type="Script" uid="uid://brkrto575lmsh" path="res://controls.gd" id="9_b26j0"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
@@ -159,6 +160,7 @@ script = ExtResource("3_2hs0m")
 script = ExtResource("4_2hs0m")
 
 [node name="MovementStateMachine" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("5_dw050")
 
 [node name="Onboard" type="Node" parent="MovementStateMachine"]
@@ -167,6 +169,10 @@ metadata/_custom_type_script = "uid://eiklno1g3x35"
 
 [node name="Onboardjump" type="Node" parent="MovementStateMachine"]
 script = ExtResource("7_n7ghd")
+metadata/_custom_type_script = "uid://eiklno1g3x35"
+
+[node name="Hooked" type="Node" parent="MovementStateMachine"]
+script = ExtResource("8_nvl01")
 metadata/_custom_type_script = "uid://eiklno1g3x35"
 
 [node name="Gravity" type="Node" parent="."]
