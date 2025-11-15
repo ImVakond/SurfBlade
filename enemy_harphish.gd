@@ -1,35 +1,20 @@
 extends Node3D
+class_name Harphish
 
 
-const ITEM := preload("uid://bmywilibhhjqb")
-const HARPHISH_BULLET := preload("uid://djsy4i2ta2uo2")
+signal died(enemy : CharacterBody3D)
+signal shoot(pos : Vector3,rot : Vector3)
 
-@onready var shoot_cooldown : Timer= %ShootCooldown
-@onready var node : Node3D = Node3D.new()
+@onready var state_machine : StateMachine = %StateMachine
+@onready var hitbox := %Hitbox
 
-var tween = create_tween()
-
-func _ready() -> void:
-	await get_tree().create_timer(randi_range(-0.0,0.2)).timeout
-	shoot_cooldown.start()
-	add_sibling(node)
-	node.global_position = global_position
-	
-func _process(delta : float) -> void:
-	node.look_at(Global.player.global_position)
-	global_rotation = rotation.slerp(node.global_rotation,5.0 * delta) + Vector3()
+func _process(_delta : float) -> void:
+	look_at(Global.player.global_position)
 
 func _on_hitbox_died() -> void:
-	var item : RigidBody3D = ITEM.instantiate()
-	call_deferred("add_sibling",item)
-	item.global_position = global_position
-	item.angular_velocity = Vector3(randf_range(-1.0,1.0),randf_range(-1.0,1.0),randf_range(-1.0,1.0))
-	item.linear_velocity = (global_position - Global.player.global_position).normalized() * Vector3(5,0,5) + Vector3(0,5,0)
-	node.call_deferred("queue_free")
-	call_deferred("queue_free")
-	
-func _on_shoot_cooldown_timeout():
-	var bullet : Node3D = HARPHISH_BULLET.instantiate()
-	bullet.rotation = rotation
-	Global.main.add_child(bullet)
-	bullet.global_position = global_position
+	emit_signal("died",self)
+	state_machine._transition_to_next_state("Inactive")
+
+func start():
+	state_machine._transition_to_next_state("Ascend")
+	hitbox.health = hitbox.max_health

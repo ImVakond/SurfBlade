@@ -1,7 +1,7 @@
 extends State
 
 
-func enter(last: String, data : Dictionary = {}) -> void:
+func enter(_last: String, _data : Dictionary = {}) -> void:
 	owner.crosshair.text = "o"
 	owner.controllabel.change({"Right Click" : "Parry"})
 

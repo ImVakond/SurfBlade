@@ -4,7 +4,7 @@ extends State
 const HOOK_BODY = preload("uid://bxt06cc0ci6ul")
 
 
-func enter(last: String, data : Dictionary = {}) -> void:
+func enter(_last: String, _data : Dictionary = {}) -> void:
 	owner.crosshair.text = "+"
 	owner.controllabel.change({"Right Click" : ""})
 
@@ -12,8 +12,8 @@ func handle_input(event : InputEvent) -> void:
 	if event.is_action_pressed("Attack"):
 		if !owner.active_hook:
 			var hook : CharacterBody3D = HOOK_BODY.instantiate()
+			await owner.call_deferred("add_sibling",hook)
 			hook.global_rotation = owner.cameraholder.global_rotation
-			owner.add_sibling(hook)
 			hook.position = owner.position
 			owner.active_hook = hook
 			hook.connect("time_exceeded",throw_hook)

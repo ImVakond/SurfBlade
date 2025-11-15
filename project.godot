@@ -21,6 +21,10 @@ boot_splash/show_image=false
 
 Global="*res://global.gd"
 
+[debug]
+
+gdscript/warnings/unused_signal=0
+
 [display]
 
 window/size/viewport_width=1920
@@ -32,6 +36,7 @@ window/stretch/mode="viewport"
 [global_group]
 
 PlayerDamage=""
+Shield=""
 
 [input]
 

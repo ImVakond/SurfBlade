@@ -18,6 +18,8 @@ shape = SubResource("BoxShape3D_lxvql")
 disabled = true
 
 [node name="HarphishBulletArea" type="Area3D" parent="."]
+collision_layer = 3
+collision_mask = 3
 
 [node name="Mesh" type="MeshInstance3D" parent="HarphishBulletArea"]
 mesh = SubResource("BoxMesh_ni117")
@@ -30,5 +32,6 @@ wait_time = 5.0
 autostart = true
 ignore_time_scale = true
 
+[connection signal="area_entered" from="HarphishBulletArea" to="." method="_on_harphish_bullet_area_area_entered"]
 [connection signal="body_entered" from="HarphishBulletArea" to="." method="_on_hook_area_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

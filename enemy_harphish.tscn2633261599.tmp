@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://g0uja46i3wmj"]
+[gd_scene load_steps=15 format=3 uid="uid://g0uja46i3wmj"]
 
 [ext_resource type="Script" uid="uid://bb7oye8qve2pw" path="res://hitbox.gd" id="1_ouwc6"]
 [ext_resource type="Script" uid="uid://b18isbj66e46b" path="res://enemy_harphish.gd" id="1_t2eha"]
@@ -9,7 +9,6 @@
 [ext_resource type="Script" uid="uid://cte3u6i7bt7q" path="res://harphish_up.gd" id="3_s6hh6"]
 [ext_resource type="Script" uid="uid://3e27hwwx48fj" path="res://harphish_descend.gd" id="4_s6hh6"]
 [ext_resource type="BoxMesh" uid="uid://bf12t5tj44mei" path="res://particle_pass.tres" id="4_yfwn8"]
-[ext_resource type="Script" uid="uid://wnq3cutdkdr2" path="res://inactive.gd" id="6_rpg35"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s6hh6"]
 
@@ -32,13 +31,8 @@ collision_mask = 2
 script = ExtResource("1_t2eha")
 
 [node name="StateMachine" type="Node" parent="."]
-unique_name_in_owner = true
 script = ExtResource("2_yfwn8")
 metadata/_custom_type_script = "uid://ckhi5n4l5gx12"
-
-[node name="Inactive" type="Node" parent="StateMachine"]
-script = ExtResource("6_rpg35")
-metadata/_custom_type_script = "uid://eiklno1g3x35"
 
 [node name="Ascend" type="Node" parent="StateMachine"]
 script = ExtResource("3_3bqhh")
@@ -53,7 +47,6 @@ script = ExtResource("4_s6hh6")
 metadata/_custom_type_script = "uid://eiklno1g3x35"
 
 [node name="Hitbox" type="Area3D" parent="." node_paths=PackedStringArray("Collider", "healthbar", "particles")]
-unique_name_in_owner = true
 script = ExtResource("1_ouwc6")
 Collider = NodePath("HitboxCol")
 healthbar = NodePath("HealthBar")

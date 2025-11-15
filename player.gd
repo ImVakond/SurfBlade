@@ -15,6 +15,7 @@ const SPEED = 20.0
 @onready var movement_state_machine: Node = %MovementStateMachine
 @onready var crosshair := %Crosshair
 @onready var parrycollision := %ParryCollision
+@onready var camera := %Camera
 
 var targeted_area : Area3D = null
 var active_hook : CharacterBody3D = null
@@ -24,7 +25,10 @@ func _physics_process(_delta : float) -> void:
 		targeted_area = targeter.get_collider()
 	else:
 		targeted_area = null
-func _input(event : InputEvent) -> void:
+	camera.fov = 70+velocity.length() / 2.0
+	if velocity.length() > 20:
+		cameraholder.position = Vector3(0,0.6,0.2) + Vector3(randf_range(-0.05,0.05),0,randf_range(-0.05,0.05))
+func _input(_event : InputEvent) -> void:
 	pass
 
 func _on_attack_area_area_entered(area : Area3D) -> void:
