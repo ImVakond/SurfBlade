@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b01axphphb3sk"]
+[gd_scene load_steps=16 format=3 uid="uid://b01axphphb3sk"]
 
 [ext_resource type="Script" uid="uid://b321veh5c3xks" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://buok0w254t0wh" path="res://player.tscn" id="1_ig7tw"]
@@ -41,11 +41,8 @@ shader_parameter/metallic = 0.023
 shader_parameter/roughness = 0.595
 shader_parameter/fractal = SubResource("NoiseTexture2D_h2yge")
 
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_1bvp3"]
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_7mycd"]
 exposure_multiplier = 1.566
-
-[sub_resource type="Compositor" id="Compositor_7mycd"]
-compositor_effects = Array[CompositorEffect]([null])
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7mycd"]
 
@@ -82,8 +79,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_h2yge")
 [node name="WorldEnviroment" type="WorldEnvironment" parent="Enviroment"]
 unique_name_in_owner = true
 environment = ExtResource("4_7mycd")
-camera_attributes = SubResource("CameraAttributesPractical_1bvp3")
-compositor = SubResource("Compositor_7mycd")
+camera_attributes = SubResource("CameraAttributesPractical_7mycd")
 
 [node name="Sun_Day" type="DirectionalLight3D" parent="Enviroment"]
 unique_name_in_owner = true

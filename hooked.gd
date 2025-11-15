@@ -8,3 +8,8 @@ func update(_delta : float) -> void:
 		owner.active_hook = null
 		owner.velocity /= 2
 		switch("Onboard")
+
+func handle_input(event : InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		owner.cameraholder.rotate_object_local(Vector3(1,0,0),-event.relative.y / 270)
+		owner.rotate_object_local(Vector3(0,1,0),-event.relative.x / 270)

@@ -20,8 +20,8 @@ collision_mask = 0
 script = ExtResource("1_p2j4v")
 
 [node name="HookArea" type="Area3D" parent="."]
-collision_layer = 3
-collision_mask = 3
+collision_layer = 7
+collision_mask = 7
 
 [node name="Collision" type="CollisionShape3D" parent="HookArea"]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)

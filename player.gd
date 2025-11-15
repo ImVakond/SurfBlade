@@ -12,10 +12,11 @@ const SPEED = 20.0
 @onready var hook_mesh: MeshInstance3D = %HookMesh
 @onready var targeter : RayCast3D = %Targeter
 @onready var controllabel : Label = %Controls
-@onready var movement_state_machine: Node = %MovementStateMachine
+@onready var movement_state_machine: StateMachine = %MovementStateMachine
 @onready var crosshair := %Crosshair
 @onready var parrycollision := %ParryCollision
 @onready var camera := %Camera
+@onready var knockbackcd := %Knockbackcd
 
 var targeted_area : Area3D = null
 var active_hook : CharacterBody3D = null
@@ -26,17 +27,20 @@ func _physics_process(_delta : float) -> void:
 	else:
 		targeted_area = null
 	camera.fov = 70+velocity.length() / 2.0
-	if velocity.length() > 20:
-		cameraholder.position = Vector3(0,0.6,0.2) + Vector3(randf_range(-0.05,0.05),0,randf_range(-0.05,0.05))
+	#if velocity.length() > 20:
+	#	cameraholder.position = Vector3(0,0.6,0.2) + Vector3(randf_range(-0.05,0.05),0,randf_range(-0.05,0.05))
 func _input(_event : InputEvent) -> void:
 	pass
 
 func _on_attack_area_area_entered(area : Area3D) -> void:
-	if area is Hitbox and area.enemy:
+	if area is Hitbox and area.enemy and knockbackcd.is_stopped():
 		var pitch = cameraholder.global_rotation.x
 		var yaw = cameraholder.global_rotation.y
 		velocity.y = -sin(pitch) * 50 / 3.0
 		velocity +=  50 * Vector3(cos(pitch) * sin(yaw),0,cos(pitch) * cos(yaw))
+		knockbackcd.start()
+		if movement_state_machine.state.name == "Hook":
+			movement_state_machine._transition_to_next_state("Onboardjump")
 		
 func is_on_floor_or_water() -> bool:
 	return is_on_floor() or global_position.y < 1.5

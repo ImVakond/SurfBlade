@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://buok0w254t0wh"]
+[gd_scene load_steps=28 format=3 uid="uid://buok0w254t0wh"]
 
 [ext_resource type="Script" uid="uid://brssn1of78q8a" path="res://player.gd" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://dudbeybe481tr" path="res://gravity.gd" id="2_onrkg"]
@@ -95,9 +95,15 @@ func _on_weapon_state_machine_switched(state : State) -> void:
 	
 "
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ivps1"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.996078)
+
 [sub_resource type="CylinderMesh" id="CylinderMesh_i3pqv"]
+material = SubResource("StandardMaterial3D_ivps1")
 
 [sub_resource type="BoxMesh" id="BoxMesh_2hs0m"]
+material = SubResource("StandardMaterial3D_ivps1")
 
 [sub_resource type="LabelSettings" id="LabelSettings_i3pqv"]
 font_size = 64
@@ -247,6 +253,11 @@ offset_right = 281.0
 offset_bottom = 1075.0
 vertical_alignment = 1
 script = ExtResource("9_b26j0")
+
+[node name="Knockbackcd" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.1
+one_shot = true
 
 [connection signal="area_entered" from="CameraHolder/AttackArea" to="." method="_on_attack_area_area_entered"]
 [connection signal="switched" from="WeaponStateMachine" to="CameraHolder/Weapons" method="_on_weapon_state_machine_switched"]

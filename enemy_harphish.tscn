@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://g0uja46i3wmj"]
+[gd_scene load_steps=18 format=3 uid="uid://g0uja46i3wmj"]
 
 [ext_resource type="Script" uid="uid://bb7oye8qve2pw" path="res://hitbox.gd" id="1_ouwc6"]
 [ext_resource type="Script" uid="uid://b18isbj66e46b" path="res://enemy_harphish.gd" id="1_t2eha"]
@@ -18,13 +18,23 @@ viewport_path = NodePath("ProgressBarViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3bqhh"]
 resource_local_to_scene = true
+transparency = 1
+blend_mode = 4
 shading_mode = 0
-albedo_color = Color(1, 1, 1, 0)
+albedo_color = Color(1, 1, 1, 0.14902)
 albedo_texture = SubResource("ViewportTexture_272bh")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rpg35"]
+albedo_color = Color(1, 0.462745, 0.196078, 1)
+roughness = 0.0
+
 [sub_resource type="SphereMesh" id="SphereMesh_ouwc6"]
+material = SubResource("StandardMaterial3D_rpg35")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_t2eha"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rpg35"]
+radius = 0.697509
 
 [node name="EnemyHarphish" type="CharacterBody3D"]
 collision_layer = 2
@@ -86,5 +96,12 @@ shape = SubResource("SphereShape3D_t2eha")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 5.0
+
+[node name="Hookextension" type="CharacterBody3D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hookextension"]
+shape = SubResource("SphereShape3D_rpg35")
 
 [connection signal="died" from="Hitbox" to="." method="_on_hitbox_died"]
