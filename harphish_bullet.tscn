@@ -17,7 +17,7 @@ script = ExtResource("1_qqpij")
 shape = SubResource("BoxShape3D_lxvql")
 disabled = true
 
-[node name="HarphishBulletArea" type="Area3D" parent="."]
+[node name="HarphishBulletArea" type="Area3D" parent="." groups=["EnemyDamage"]]
 collision_layer = 3
 collision_mask = 3
 

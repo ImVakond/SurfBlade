@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b01axphphb3sk"]
+[gd_scene load_steps=17 format=3 uid="uid://b01axphphb3sk"]
 
 [ext_resource type="Script" uid="uid://b321veh5c3xks" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://buok0w254t0wh" path="res://player.tscn" id="1_ig7tw"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://cighyvs18l5tc" path="res://enviroment.gd" id="3_272bh"]
 [ext_resource type="Environment" uid="uid://drbxgywq0qt61" path="res://nightsky.tres" id="4_7mycd"]
 [ext_resource type="Script" uid="uid://imm8cpwki36x" path="res://enemy_manager.gd" id="6_7mycd"]
+[ext_resource type="PackedScene" uid="uid://ccp4ntv4o8pki" path="res://enemy_charger.tscn" id="6_272bh"]
 
 [sub_resource type="GDScript" id="GDScript_h2yge"]
 resource_name = "asd"
@@ -114,13 +115,16 @@ light_indirect_energy = 0.0
 sky_mode = 2
 
 [node name="TestWall" type="StaticBody3D" parent="Enviroment"]
-transform = Transform3D(0.720273, 0, 4.6516, 0, 18.0564, 0, -0.693691, 0, 4.82985, 0, 8.1737, 0)
+transform = Transform3D(0.720273, 0, 4.6516, 0, 18.0564, 0, -0.693691, 0, 4.82985, 0, -17.2478, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Enviroment/TestWall"]
 shape = SubResource("BoxShape3D_7mycd")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Enviroment/TestWall"]
 mesh = SubResource("BoxMesh_272bh")
+
+[node name="Enemy_charger" parent="Enviroment" instance=ExtResource("6_272bh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.0056, 0, -40.4438)
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.730162, 0.683274, 0, -0.683274, 0.730162, 0, 11.3468, 7.08274)

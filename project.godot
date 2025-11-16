@@ -37,6 +37,7 @@ window/stretch/mode="viewport"
 
 PlayerDamage=""
 Shield=""
+EnemyDamage=""
 
 [input]
 

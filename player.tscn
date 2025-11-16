@@ -1,8 +1,9 @@
-[gd_scene load_steps=28 format=3 uid="uid://buok0w254t0wh"]
+[gd_scene load_steps=33 format=3 uid="uid://buok0w254t0wh"]
 
 [ext_resource type="Script" uid="uid://brssn1of78q8a" path="res://player.gd" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://dudbeybe481tr" path="res://gravity.gd" id="2_onrkg"]
 [ext_resource type="Script" uid="uid://6bj42mo0apx7" path="res://weapon_state_machine.gd" id="2_sweqy"]
+[ext_resource type="PackedScene" uid="uid://fn4ue284pmgv" path="res://motion_blur/motion_blur.tscn" id="2_urp6f"]
 [ext_resource type="Script" uid="uid://b0wdhtbjsknqa" path="res://bat.gd" id="3_2hs0m"]
 [ext_resource type="Script" uid="uid://cbxtqhmhq4ogv" path="res://move_and_slide.gd" id="3_i3pqv"]
 [ext_resource type="Script" uid="uid://dwju4ladeygwc" path="res://hook.gd" id="4_2hs0m"]
@@ -11,10 +12,14 @@
 [ext_resource type="Script" uid="uid://bmr4ygcr503u1" path="res://onboardjump.gd" id="7_n7ghd"]
 [ext_resource type="Script" uid="uid://ds33y5k5nxgsx" path="res://hooked.gd" id="8_nvl01"]
 [ext_resource type="Script" uid="uid://brkrto575lmsh" path="res://controls.gd" id="9_b26j0"]
+[ext_resource type="Script" uid="uid://bb7oye8qve2pw" path="res://hitbox.gd" id="12_ivps1"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4flbx"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_urp6f"]
+size = Vector2(1000, 500)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_i3pqv"]
 radius = 2.02626
@@ -115,12 +120,29 @@ func _process(_delta : float) -> void:
 	text = str(owner.velocity.x) + \"\\n\" + str(owner.velocity.z)
 "
 
+[sub_resource type="GDScript" id="GDScript_ivps1"]
+script/source = "extends ProgressBar
+
+
+@export var hitbox : Hitbox
+
+func _process(_delta : float) -> void:
+	value = hitbox.health
+	max_value = hitbox.max_health
+"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_urp6f"]
+radius = 0.416016
+height = 1.72461
+
 [node name="Player" type="CharacterBody3D"]
+transform = Transform3D(2.26895, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
 motion_mode = 1
 script = ExtResource("1_4flbx")
+FOV_effect = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 layers = 0
@@ -136,6 +158,10 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.560683, 0.172314)
 fov = 70.0
+
+[node name="motion_blur" parent="CameraHolder/Camera" instance=ExtResource("2_urp6f")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -1.1477)
+mesh = SubResource("PlaneMesh_urp6f")
 
 [node name="AttackArea" type="Area3D" parent="CameraHolder" groups=["PlayerDamage"]]
 
@@ -254,10 +280,28 @@ offset_bottom = 1075.0
 vertical_alignment = 1
 script = ExtResource("9_b26j0")
 
+[node name="HpBar" type="ProgressBar" parent="CanvasLayer" node_paths=PackedStringArray("hitbox")]
+offset_left = 58.0
+offset_right = 385.0
+offset_bottom = 27.0
+script = SubResource("GDScript_ivps1")
+hitbox = NodePath("../../Hitbox")
+
 [node name="Knockbackcd" type="Timer" parent="."]
 unique_name_in_owner = true
 wait_time = 0.1
 one_shot = true
+
+[node name="Hitbox" type="Area3D" parent="." node_paths=PackedStringArray("Collider")]
+script = ExtResource("12_ivps1")
+Collider = NodePath("CollisionShape3D")
+max_health = 100.0
+enemy = false
+metadata/_custom_type_script = "uid://bb7oye8qve2pw"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0491906)
+shape = SubResource("CapsuleShape3D_urp6f")
 
 [connection signal="area_entered" from="CameraHolder/AttackArea" to="." method="_on_attack_area_area_entered"]
 [connection signal="switched" from="WeaponStateMachine" to="CameraHolder/Weapons" method="_on_weapon_state_machine_switched"]

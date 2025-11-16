@@ -6,15 +6,14 @@ class_name Hitbox
 @export var particles : GPUParticles3D
 
 @export var max_health = 5.0
-
-var enemy : bool = true
+@export var enemy : bool = true
 
 signal died
-
 var health = 1.0:
 	set(value):
 		health = value
-		healthbar.set_health(health,max_health)
+		if healthbar:
+			healthbar.set_health(health,max_health)
 		if health <= 0:
 			emit_signal("died")
 func _ready() -> void:
@@ -22,8 +21,10 @@ func _ready() -> void:
 	health = max_health
 
 func on_area_entered(area : Area3D) -> void:
-	if area.is_in_group("PlayerDamage"):
+	if area.is_in_group("PlayerDamage") and enemy:
 		health -= 1
 		if particles:
 			particles.restart()
 			particles.emitting = true
+	elif area.is_in_group("EnemyDamage") and not enemy:
+		health -= 1

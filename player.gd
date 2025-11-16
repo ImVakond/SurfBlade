@@ -5,6 +5,8 @@ const ACCELARATION = 50
 const JUMP_VELOCITY = 8
 const SPEED = 20.0
 
+@export var FOV_effect : bool = false
+
 @onready var cameraholder := %CameraHolder
 @onready var attack_anim := %AttackAnim
 @onready var weapon_state_machine: Node = %WeaponStateMachine
@@ -26,8 +28,9 @@ func _physics_process(_delta : float) -> void:
 		targeted_area = targeter.get_collider()
 	else:
 		targeted_area = null
-	camera.fov = 70+velocity.length() / 2.0
-	#if velocity.length() > 20:
+	if FOV_effect:
+		camera.fov = clampf(70+velocity.length() / 2.0,70,140)
+		#if velocity.length() > 20:
 	#	cameraholder.position = Vector3(0,0.6,0.2) + Vector3(randf_range(-0.05,0.05),0,randf_range(-0.05,0.05))
 func _input(_event : InputEvent) -> void:
 	pass

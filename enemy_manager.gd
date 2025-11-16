@@ -36,6 +36,7 @@ func enemy_died(enemy : CharacterBody3D) -> void:
 	enemy.global_position = Vector3(0,-50,0)
 
 
-func _on_spawn_timeout():
+func _on_spawn_timeout() -> void:
+	#return
 	enemies[enemyptr % 49].start()
 	enemyptr += 1
