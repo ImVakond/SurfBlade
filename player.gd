@@ -5,7 +5,6 @@ const ACCELARATION = 50
 const JUMP_VELOCITY = 8
 const SPEED = 20.0
 
-@export var FOV_effect : bool = false
 
 @onready var cameraholder := %CameraHolder
 @onready var attack_anim := %AttackAnim
@@ -19,21 +18,21 @@ const SPEED = 20.0
 @onready var parrycollision := %ParryCollision
 @onready var camera := %Camera
 @onready var knockbackcd := %Knockbackcd
+@onready var motion_blur := %motion_blur
 
 var targeted_area : Area3D = null
 var active_hook : CharacterBody3D = null
+
+func _ready() -> void:
+	motion_blur.visible = Global.settings["MotionBlur"]
 
 func _physics_process(_delta : float) -> void:
 	if targeter.is_colliding():
 		targeted_area = targeter.get_collider()
 	else:
 		targeted_area = null
-	if FOV_effect:
+	if Global.settings["FovEffect"]:
 		camera.fov = clampf(70+velocity.length() / 2.0,70,140)
-		#if velocity.length() > 20:
-	#	cameraholder.position = Vector3(0,0.6,0.2) + Vector3(randf_range(-0.05,0.05),0,randf_range(-0.05,0.05))
-func _input(_event : InputEvent) -> void:
-	pass
 
 func _on_attack_area_area_entered(area : Area3D) -> void:
 	if area is Hitbox and area.enemy and knockbackcd.is_stopped():

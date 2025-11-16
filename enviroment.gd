@@ -21,7 +21,7 @@ var enviroments : Array[Environment] = [DAYSKY,SUNSETSKY,NIGHTSKY]
 		suns[new_mode].visible = true
 		
 func _ready() -> void:
-	mode = 2
+	mode = Global.settings["Time"]
 func _input(event : InputEvent) -> void:
 	if event.is_action_pressed("1"):
 		mode = 0
