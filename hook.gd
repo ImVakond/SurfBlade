@@ -25,8 +25,8 @@ func handle_input(event : InputEvent) -> void:
 
 func throw_hook() -> void:
 	owner.active_hook = null
-	switch("Attack")
+	switch(&"Attack")
 
 func hooked() -> void:
-	switch("Attack")
-	owner.movement_state_machine._transition_to_next_state("Hooked")
+	switch(&"Attack")
+	owner.movement_state_machine._transition_to_next_state(&"Hooked")

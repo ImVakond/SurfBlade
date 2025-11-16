@@ -8,4 +8,4 @@ func enter(_last : String,_data : Dictionary = {}) -> void:
 func update(delta: float) -> void:
 	owner.position.y += 1.5 * delta
 	if owner.position.y > 0.2:
-		switch("Up")
+		switch(&"Up")

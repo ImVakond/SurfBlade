@@ -19,5 +19,5 @@ func change() -> void:
 		owner.active_hook.queue_free()
 	owner.active_hook = null
 	owner.velocity /= 2
-	switch("Onboard")
+	switch(&"Onboard")
 	

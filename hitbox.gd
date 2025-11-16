@@ -9,13 +9,17 @@ class_name Hitbox
 @export var enemy : bool = true
 
 signal died
+signal took_damage
+
 var health = 1.0:
 	set(value):
-		health = value
+		if health < value:
+			took_damage.emit()
 		if healthbar:
-			healthbar.set_health(health,max_health)
-		if health <= 0:
-			emit_signal("died")
+			healthbar.set_health(value,max_health)
+		if value <= 0:
+			died.emit()
+		health = value
 func _ready() -> void:
 	area_entered.connect(on_area_entered)
 	health = max_health

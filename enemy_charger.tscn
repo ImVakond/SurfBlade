@@ -1,16 +1,155 @@
-[gd_scene load_steps=3 format=3 uid="uid://ccp4ntv4o8pki"]
+[gd_scene load_steps=26 format=3 uid="uid://ccp4ntv4o8pki"]
+
+[ext_resource type="Script" uid="uid://bb7oye8qve2pw" path="res://hitbox.gd" id="1_8q4tx"]
+[ext_resource type="Script" uid="uid://b806deawmraku" path="res://enemy_charger.gd" id="1_h56um"]
+[ext_resource type="PackedScene" uid="uid://dh4r1g6730v4m" path="res://healthbar.tscn" id="2_kxtf1"]
+[ext_resource type="Material" uid="uid://uau5jm8slqrd" path="res://particle_material.tres" id="3_h56um"]
+[ext_resource type="BoxMesh" uid="uid://bf12t5tj44mei" path="res://particle_pass.tres" id="4_yfhys"]
+[ext_resource type="Script" uid="uid://ckhi5n4l5gx12" path="res://state_machine.gd" id="5_kxtf1"]
+[ext_resource type="Script" uid="uid://dhm5fwuqsavxw" path="res://charger_walk.gd" id="7_ekpk7"]
+[ext_resource type="Script" uid="uid://bcasxl8qwy38" path="res://getready.gd" id="8_lfmeq"]
+[ext_resource type="Script" uid="uid://k2ke6e1dgucr" path="res://charger_charge.gd" id="8_vyyrx"]
+[ext_resource type="Script" uid="uid://bckup3etvquuc" path="res://charger_stun.gd" id="9_djnsv"]
+[ext_resource type="Script" uid="uid://wnq3cutdkdr2" path="res://inactive.gd" id="10_djnsv"]
+[ext_resource type="Script" uid="uid://cbxtqhmhq4ogv" path="res://move_and_slide.gd" id="11_k4bws"]
+[ext_resource type="Script" uid="uid://bt2tvpim8duvp" path="res://charger_descend.gd" id="11_w8rxm"]
+[ext_resource type="Script" uid="uid://3i45w63w33od" path="res://charger_damager.gd" id="12_k4bws"]
+[ext_resource type="Script" uid="uid://ciw6pntyhhunw" path="res://charger_ascend.gd" id="12_lfmeq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bjn0k"]
 size = Vector3(1, 2.50763, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ivusl"]
 
-[node name="Enemy_charger" type="CharacterBody3D"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lfmeq"]
+albedo_color = Color(0.545098, 0.592157, 1, 1)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[sub_resource type="BoxShape3D" id="BoxShape3D_agard"]
+size = Vector3(1.2002, 2.6311, 1.2334)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ekpk7"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_272bh"]
+viewport_path = NodePath("ProgressBarViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vyyrx"]
+resource_local_to_scene = true
+transparency = 1
+blend_mode = 4
+shading_mode = 0
+albedo_color = Color(1, 1, 1, 0.14902)
+albedo_texture = SubResource("ViewportTexture_272bh")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_djnsv"]
+size = Vector3(2, 0.1, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_djnsv"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_k4bws"]
+material = SubResource("StandardMaterial3D_djnsv")
+size = Vector3(2, 0.1, 0.1)
+
+[node name="Enemy_charger" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_h56um")
+
+[node name="Collider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.27493, 0)
 shape = SubResource("BoxShape3D_bjn0k")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 2.4497, 0, 0, 0, 1, 0, 1.29937, 0)
 mesh = SubResource("BoxMesh_ivusl")
+surface_material_override/0 = SubResource("StandardMaterial3D_lfmeq")
+
+[node name="Hitbox" type="Area3D" parent="." node_paths=PackedStringArray("Collider", "healthbar", "particles")]
+unique_name_in_owner = true
+script = ExtResource("1_8q4tx")
+Collider = NodePath("HitboxCol")
+healthbar = NodePath("HealthBar")
+particles = NodePath("Particles")
+max_health = 3.0
+
+[node name="HitboxCol" type="CollisionShape3D" parent="Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.29499, 0)
+shape = SubResource("BoxShape3D_agard")
+
+[node name="HealthBar" parent="Hitbox" instance=ExtResource("2_kxtf1")]
+transform = Transform3D(2.87319, 0, 0, 0, 0.0541109, 0, 0, 0, 0.45289, 0, 3.02258, 0)
+mesh = SubResource("PlaneMesh_ekpk7")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_vyyrx")
+
+[node name="Particles" type="GPUParticles3D" parent="Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0695744, 0)
+emitting = false
+amount = 40
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+process_material = ExtResource("3_h56um")
+draw_pass_1 = ExtResource("4_yfhys")
+
+[node name="StateMachine" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_kxtf1")
+metadata/_custom_type_script = "uid://ckhi5n4l5gx12"
+
+[node name="Inactive" type="Node" parent="StateMachine"]
+script = ExtResource("10_djnsv")
+metadata/_custom_type_script = "uid://eiklno1g3x35"
+
+[node name="Walk" type="Node" parent="StateMachine"]
+script = ExtResource("7_ekpk7")
+metadata/_custom_type_script = "uid://eiklno1g3x35"
+
+[node name="Getready" type="Node" parent="StateMachine"]
+script = ExtResource("8_lfmeq")
+metadata/_custom_type_script = "uid://eiklno1g3x35"
+
+[node name="Charge" type="Node" parent="StateMachine"]
+script = ExtResource("8_vyyrx")
+metadata/_custom_type_script = "uid://eiklno1g3x35"
+
+[node name="Stun" type="Node" parent="StateMachine"]
+script = ExtResource("9_djnsv")
+metadata/_custom_type_script = "uid://eiklno1g3x35"
+
+[node name="Descend" type="Node" parent="StateMachine"]
+script = ExtResource("11_w8rxm")
+
+[node name="Ascend" type="Node" parent="StateMachine"]
+script = ExtResource("12_lfmeq")
+
+[node name="MoveAndSlide" type="Node" parent="."]
+script = ExtResource("11_k4bws")
+metadata/_custom_type_script = "uid://cbxtqhmhq4ogv"
+
+[node name="ChargeCooldown" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 5.0
+one_shot = true
+
+[node name="Damager" type="Area3D" parent="." groups=["EnemyDamage"]]
+unique_name_in_owner = true
+transform = Transform3D(-0.00174533, 0, 0.999998, 0, 1, 0, -0.999998, 0, -0.00174533, 0, 1.24785, -1.46087)
+visible = false
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("12_k4bws")
+
+[node name="DamageCollider" type="CollisionShape3D" parent="Damager"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 1.16415e-10, 0, 1, 0, -1.16415e-10, 0, 1, 0, 0, -0.0038132)
+shape = SubResource("BoxShape3D_djnsv")
+disabled = true
+
+[node name="DamageMesh" type="MeshInstance3D" parent="Damager"]
+mesh = SubResource("BoxMesh_k4bws")
+
+[connection signal="died" from="Hitbox" to="." method="_on_hitbox_died"]
+[connection signal="took_damage" from="Hitbox" to="." method="_on_hitbox_took_damage"]
+[connection signal="area_entered" from="Damager" to="Damager" method="_on_area_entered"]
+[connection signal="parried" from="Damager" to="." method="_on_damager_parried"]

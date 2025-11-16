@@ -28,7 +28,7 @@ func physics_update(delta : float) -> void:
 	owner.velocity = owner.velocity.move_toward(target_direction,owner.ACCELARATION * delta)
 	
 	if owner.is_on_floor_or_water():
-		switch("Onboard")
+		switch(&"Onboard")
 func handle_input(event : InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		owner.cameraholder.rotate_object_local(Vector3(1,0,0),-event.relative.y / 270)

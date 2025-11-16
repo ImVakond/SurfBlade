@@ -140,7 +140,6 @@ transform = Transform3D(2.26895, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
-motion_mode = 1
 script = ExtResource("1_4flbx")
 FOV_effect = true
 
@@ -160,7 +159,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.560683, 0.172314)
 fov = 70.0
 
 [node name="motion_blur" parent="CameraHolder/Camera" instance=ExtResource("2_urp6f")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -1.1477)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -1.1)
 mesh = SubResource("PlaneMesh_urp6f")
 
 [node name="AttackArea" type="Area3D" parent="CameraHolder" groups=["PlayerDamage"]]
