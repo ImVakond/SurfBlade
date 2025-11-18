@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://djsy4i2ta2uo2"]
 
-[ext_resource type="Script" uid="uid://cyrysihyl1pes" path="res://harphish_bullet.gd" id="1_qqpij"]
+[ext_resource type="Script" uid="uid://cyrysihyl1pes" path="res://enemies/harpoon/harphish_bullet.gd" id="1_qqpij"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lxvql"]
 

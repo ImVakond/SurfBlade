@@ -13,13 +13,13 @@ func _ready() -> void:
 func start() -> void:
 	if state_machine.state.name == &"Inactive":
 		state_machine._transition_to_next_state(&"Ascend")
-	
+		hitbox.health = hitbox.max_health
 
 	
 func _on_hitbox_took_damage() -> void:
 	if state_machine and state_machine.state.name != &"Inactive":
 		state_machine._transition_to_next_state(&"Stun")
-		hitbox.health = hitbox.max_health
+		
 
 func _on_hitbox_died() -> void:
 	if state_machine:

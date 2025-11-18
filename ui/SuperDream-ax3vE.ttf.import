@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://caidocl0uk76r"
-path="res://.godot/imported/SuperDream-ax3vE.ttf-8596c873ea32d10721b991475a2307b1.fontdata"
+path="res://.godot/imported/SuperDream-ax3vE.ttf-68ca54b504b0ae3ddcb907653387fbde.fontdata"
 
 [deps]
 
-source_file="res://SuperDream-ax3vE.ttf"
-dest_files=["res://.godot/imported/SuperDream-ax3vE.ttf-8596c873ea32d10721b991475a2307b1.fontdata"]
+source_file="res://ui/SuperDream-ax3vE.ttf"
+dest_files=["res://.godot/imported/SuperDream-ax3vE.ttf-68ca54b504b0ae3ddcb907653387fbde.fontdata"]
 
 [params]
 

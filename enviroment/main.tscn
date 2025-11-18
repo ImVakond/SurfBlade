@@ -1,11 +1,11 @@
 [gd_scene load_steps=13 format=3 uid="uid://b01axphphb3sk"]
 
-[ext_resource type="Script" uid="uid://b321veh5c3xks" path="res://main.gd" id="1_1bvp3"]
-[ext_resource type="PackedScene" uid="uid://buok0w254t0wh" path="res://player.tscn" id="1_ig7tw"]
-[ext_resource type="Shader" uid="uid://bqvkpetder5il" path="res://ocean.gdshader" id="2_0xm2m"]
-[ext_resource type="Script" uid="uid://cighyvs18l5tc" path="res://enviroment.gd" id="3_272bh"]
-[ext_resource type="Environment" uid="uid://drbxgywq0qt61" path="res://nightsky.tres" id="4_7mycd"]
-[ext_resource type="Script" uid="uid://imm8cpwki36x" path="res://enemy_manager.gd" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://b321veh5c3xks" path="res://enviroment/main.gd" id="1_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://buok0w254t0wh" path="res://player/player.tscn" id="1_ig7tw"]
+[ext_resource type="Shader" uid="uid://bqvkpetder5il" path="res://enviroment/ocean.gdshader" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://cighyvs18l5tc" path="res://enviroment/enviroment.gd" id="3_272bh"]
+[ext_resource type="Environment" uid="uid://drbxgywq0qt61" path="res://enviroment/nightsky.tres" id="4_7mycd"]
+[ext_resource type="Script" uid="uid://imm8cpwki36x" path="res://enemies/enemy_manager.gd" id="6_7mycd"]
 
 [sub_resource type="GDScript" id="GDScript_h2yge"]
 resource_name = "asd"
@@ -111,11 +111,7 @@ transform = Transform3D(1, 0, 0, 0, 0.730162, 0.683274, 0, -0.683274, 0.730162, 
 script = ExtResource("6_7mycd")
 
 [node name="Spawn" type="Timer" parent="."]
-autostart = true
-
-[node name="Spawn2" type="Timer" parent="."]
 wait_time = 10.0
 autostart = true
 
 [connection signal="timeout" from="Spawn" to="EnemyManager" method="_on_spawn_timeout"]
-[connection signal="timeout" from="Spawn2" to="EnemyManager" method="_on_spawn_2_timeout"]

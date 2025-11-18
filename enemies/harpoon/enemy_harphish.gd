@@ -12,9 +12,10 @@ func _process(_delta : float) -> void:
 	look_at(Global.player.global_position)
 
 func _on_hitbox_died() -> void:
-	emit_signal("died",self)
-	state_machine._transition_to_next_state("Inactive")
+	died.emit(self)
+	state_machine._transition_to_next_state(&"Inactive")
 
 func start():
-	state_machine._transition_to_next_state("Ascend")
-	hitbox.health = hitbox.max_health
+	if state_machine.state.name == &"Inactive":
+		state_machine._transition_to_next_state(&"Ascend")
+		hitbox.health = hitbox.max_health

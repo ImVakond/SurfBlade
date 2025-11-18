@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://qvnrcx2swmwa"
-path="res://.godot/imported/sunset.png-8d9d3bbad59301c1b19d62d0a042e314.ctex"
+path="res://.godot/imported/sunset.png-cc964773708f64905894c22230602de5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sunset.png"
-dest_files=["res://.godot/imported/sunset.png-8d9d3bbad59301c1b19d62d0a042e314.ctex"]
+source_file="res://enviroment/sunset.png"
+dest_files=["res://.godot/imported/sunset.png-cc964773708f64905894c22230602de5.ctex"]
 
 [params]
 

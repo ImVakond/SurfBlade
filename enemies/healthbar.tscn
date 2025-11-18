@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dh4r1g6730v4m"]
 
-[ext_resource type="Script" uid="uid://dkoe4r6m8nbh1" path="res://health_bar.gd" id="1_iywrq"]
+[ext_resource type="Script" uid="uid://dkoe4r6m8nbh1" path="res://enemies/health_bar.gd" id="1_bsn7a"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_hx648"]
 
@@ -34,7 +34,7 @@ corner_detail = 6
 transform = Transform3D(2.87319, 0, 0, 0, 0.0541109, 0, 0, 0, 0.45289, 0, 0, 0)
 mesh = SubResource("PlaneMesh_hx648")
 surface_material_override/0 = SubResource("StandardMaterial3D_3u6gp")
-script = ExtResource("1_iywrq")
+script = ExtResource("1_bsn7a")
 
 [node name="ProgressBarViewport" type="SubViewport" parent="."]
 transparent_bg = true

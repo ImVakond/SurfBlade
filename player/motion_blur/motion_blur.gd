@@ -4,6 +4,8 @@ extends MeshInstance3D
 var cam_pos_prev = Vector3()
 var cam_rot_prev = Quaternion()
 
+# Created by Bauxitedev
+
 func _process(_delta):
 	
 	#OS.delay_msec(30)

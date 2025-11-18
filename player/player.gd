@@ -41,8 +41,8 @@ func _on_attack_area_area_entered(area : Area3D) -> void:
 		velocity.y = -sin(pitch) * 50 / 3.0
 		velocity +=  50 * Vector3(cos(pitch) * sin(yaw),0,cos(pitch) * cos(yaw))
 		knockbackcd.start()
-		if movement_state_machine.state.name == "Hook":
-			movement_state_machine._transition_to_next_state("Onboardjump")
+		if movement_state_machine.state.name == &"Hook":
+			movement_state_machine._transition_to_next_state(&"Onboardjump")
 		
 func is_on_floor_or_water() -> bool:
 	return is_on_floor() or global_position.y < 1.5

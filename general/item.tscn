@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bmywilibhhjqb"]
 
-[ext_resource type="Script" uid="uid://b6ug6pyh540am" path="res://item.gd" id="1_tnite"]
+[ext_resource type="Script" uid="uid://b6ug6pyh540am" path="res://general/item.gd" id="1_tnite"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vpy52"]
 

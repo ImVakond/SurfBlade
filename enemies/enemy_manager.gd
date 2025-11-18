@@ -52,15 +52,19 @@ func enemy_died(enemy : Node3D) -> void:
 	enemy.global_position = Vector3(0,-50,0)
 
 
-func _on_spawn_timeout() -> void:
+func spawn_harpoon() -> void:
 	if !max_fishes:
 		return
 	enemies1[enemycounter1 % max_fishes].start()
 	enemycounter1 += 1
 
-
-func _on_spawn_2_timeout():
+func spawn_charger():
 	if !max_chargers:
 		return
 	enemies2[enemycounter2 % max_chargers].start()
 	enemycounter2 += 1
+
+func _on_spawn_timeout() -> void:
+	for i in range(10):
+		spawn_harpoon()
+	spawn_charger()
