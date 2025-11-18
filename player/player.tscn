@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://ds33y5k5nxgsx" path="res://player/hooked.gd" id="8_nvl01"]
 [ext_resource type="Script" uid="uid://brkrto575lmsh" path="res://ui/controls.gd" id="9_b26j0"]
 [ext_resource type="Script" uid="uid://bb7oye8qve2pw" path="res://general/hitbox.gd" id="12_ivps1"]
+[ext_resource type="Texture2D" uid="uid://bxl5c2h5b8820" path="res://ui/combo_empty.png" id="13_kb6p2"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
 
@@ -112,13 +113,6 @@ material = SubResource("StandardMaterial3D_ivps1")
 
 [sub_resource type="LabelSettings" id="LabelSettings_i3pqv"]
 font_size = 64
-
-[sub_resource type="GDScript" id="GDScript_i3pqv"]
-script/source = "extends Label
-
-func _process(_delta : float) -> void:
-	text = str(owner.velocity.x) + \"\\n\" + str(owner.velocity.z)
-"
 
 [sub_resource type="GDScript" id="GDScript_ivps1"]
 script/source = "extends ProgressBar
@@ -264,13 +258,6 @@ label_settings = SubResource("LabelSettings_i3pqv")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label2" type="Label" parent="CanvasLayer"]
-offset_left = 1879.0
-offset_right = 1919.0
-offset_bottom = 23.0
-horizontal_alignment = 2
-script = SubResource("GDScript_i3pqv")
-
 [node name="Controls" type="Label" parent="CanvasLayer"]
 unique_name_in_owner = true
 offset_left = 2.0
@@ -285,6 +272,24 @@ offset_right = 385.0
 offset_bottom = 27.0
 script = SubResource("GDScript_ivps1")
 hitbox = NodePath("../../Hitbox")
+
+[node name="ComboBar" type="TextureProgressBar" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 1333.0
+offset_top = 1.0
+offset_right = 1589.0
+offset_bottom = 257.0
+scale = Vector2(2.33657, 4.2235)
+fill_mode = 3
+texture_under = ExtResource("13_kb6p2")
+texture_progress = ExtResource("13_kb6p2")
+tint_under = Color(1, 1, 1, 0)
+tint_progress = Color(1, 0, 0, 1)
+
+[node name="ComboTimer" type="Timer" parent="CanvasLayer"]
+unique_name_in_owner = true
+wait_time = 0.001
+one_shot = true
 
 [node name="Knockbackcd" type="Timer" parent="."]
 unique_name_in_owner = true
@@ -305,3 +310,4 @@ shape = SubResource("CapsuleShape3D_urp6f")
 [connection signal="area_entered" from="CameraHolder/AttackArea" to="." method="_on_attack_area_area_entered"]
 [connection signal="switched" from="WeaponStateMachine" to="CameraHolder/Weapons" method="_on_weapon_state_machine_switched"]
 [connection signal="switched" from="WeaponStateMachine" to="CanvasLayer/Controls" method="_on_weapon_state_machine_switched"]
+[connection signal="timeout" from="CanvasLayer/ComboTimer" to="." method="_on_combo_timer_timeout"]

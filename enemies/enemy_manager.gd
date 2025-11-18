@@ -32,7 +32,7 @@ func _ready() -> void:
 		enemy.position = Vector3(0,-50,0)
 		enemies2.append(enemy)
 		enemy.connect("died",enemy_died)
-		
+	_on_spawn_timeout()
 func spawn_item_at(pos : Vector3):
 	var item : RigidBody3D = ITEM.instantiate()
 	await call_deferred("add_sibling",item)
