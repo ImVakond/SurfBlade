@@ -7,5 +7,5 @@ var player : Node3D
 var settings : Dictionary = {
 	"MotionBlur" : true,
 	"FovEffect" : true,
-	"Time" : 2
+	"Time" : 0
 }

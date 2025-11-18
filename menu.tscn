@@ -1,0 +1,197 @@
+[gd_scene load_steps=18 format=3 uid="uid://bqjbqg1fkarat"]
+
+[ext_resource type="Script" uid="uid://cighyvs18l5tc" path="res://enviroment.gd" id="1_mae5d"]
+[ext_resource type="Script" uid="uid://dt1upfsvwqcww" path="res://menu.gd" id="1_ytr4m"]
+[ext_resource type="Shader" uid="uid://bqvkpetder5il" path="res://ocean.gdshader" id="2_4hy44"]
+[ext_resource type="Environment" uid="uid://fgm3o1d0j0ae" path="res://daysky.tres" id="3_mae5d"]
+[ext_resource type="Theme" uid="uid://dgm5n44gasdl0" path="res://ui_theme.tres" id="4_4hy44"]
+[ext_resource type="Texture2D" uid="uid://h450rujvix5l" path="res://sun.png" id="6_ecwwl"]
+[ext_resource type="Script" uid="uid://dvb5t6hfgl7cb" path="res://timeswitcher.gd" id="7_kk3ma"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_l48gv"]
+size = Vector2(500, 500)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ecwwl"]
+noise_type = 4
+fractal_type = 2
+fractal_octaves = 1
+fractal_gain = 1.0
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_h2yge"]
+width = 2000
+height = 2000
+seamless = true
+bump_strength = 1.5
+noise = SubResource("FastNoiseLite_ecwwl")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kk3ma"]
+render_priority = 0
+shader = ExtResource("2_4hy44")
+shader_parameter/albedo = Color(0, 0.517647, 0.698039, 1)
+shader_parameter/metallic = 0.023
+shader_parameter/roughness = 0.595
+shader_parameter/fractal = SubResource("NoiseTexture2D_h2yge")
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_nrnbx"]
+exposure_multiplier = 1.566
+
+[sub_resource type="SVGTexture" id="SVGTexture_ytr4m"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><rect width=\"14\" height=\"14\" x=\"1\" y=\"1\" fill=\"#fff\" fill-opacity=\".75\" rx=\"2.333\"/><path fill=\"#1a1a1a\" d=\"m11.5 3.75-5.6 5.6-1.7-1.7-1.5 1.5 3.2 3.2 7.1-7.1z\"/></svg>
+"
+base_scale = 5.0
+
+[sub_resource type="SVGTexture" id="SVGTexture_l48gv"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><rect width=\"14\" height=\"14\" x=\"1\" y=\"1\" fill=\"#1a1a1a\" fill-opacity=\".5\" rx=\"2.333\"/></svg>
+"
+base_scale = 5.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ecwwl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kk3ma"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nrnbx"]
+
+[node name="Menu" type="Node3D"]
+script = ExtResource("1_ytr4m")
+
+[node name="Enviroment" type="Node" parent="."]
+script = ExtResource("1_mae5d")
+
+[node name="Ocean" type="MeshInstance3D" parent="Enviroment"]
+transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0.5)
+mesh = SubResource("PlaneMesh_l48gv")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_kk3ma")
+
+[node name="WorldEnviroment" type="WorldEnvironment" parent="Enviroment"]
+unique_name_in_owner = true
+environment = ExtResource("3_mae5d")
+camera_attributes = SubResource("CameraAttributesPractical_nrnbx")
+
+[node name="Sun_Day" type="DirectionalLight3D" parent="Enviroment"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+visible = false
+light_energy = 2.0
+light_angular_distance = 1.0
+sky_mode = 2
+
+[node name="Sun_Set" type="DirectionalLight3D" parent="Enviroment"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.999391, 0.0348995, 0, -0.0348995, 0.999391, 0, -6.10915, 0)
+light_color = Color(1, 0.564706, 0.0509804, 1)
+light_angular_distance = 1.0
+light_specular = 10.0
+sky_mode = 2
+
+[node name="SunSetEffect" type="DirectionalLight3D" parent="Enviroment/Sun_Set"]
+light_color = Color(1, 0.564706, 0.0509804, 1)
+light_energy = 2.0
+light_angular_distance = 1.0
+light_specular = 10.0
+sky_mode = 1
+
+[node name="Moon" type="DirectionalLight3D" parent="Enviroment"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.304033, 0.952661, 0, -0.952661, 0.304033, 0, 0, 0)
+visible = false
+light_color = Color(0.905882, 1, 1, 1)
+light_energy = 0.5
+light_indirect_energy = 0.0
+sky_mode = 2
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-1, 1.1411e-08, -8.66749e-08, 0, 0.991445, 0.130526, 8.74228e-08, 0.130526, -0.991445, 0, 3.26135, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Play" type="Button" parent="CanvasLayer"]
+offset_left = 1.0
+offset_top = 851.0
+offset_right = 426.0
+offset_bottom = 1076.0
+theme = ExtResource("4_4hy44")
+theme_override_font_sizes/font_size = 192
+text = "Play"
+flat = true
+alignment = 0
+
+[node name="Button2" type="Button" parent="CanvasLayer"]
+offset_left = -89.0
+offset_top = 1596.0
+offset_right = 241.0
+offset_bottom = 1680.0
+theme = ExtResource("4_4hy44")
+text = "Settings"
+flat = true
+alignment = 0
+
+[node name="FOVEffects" type="Label" parent="CanvasLayer"]
+offset_left = 1339.0
+offset_top = 747.0
+offset_right = 1913.0
+offset_bottom = 823.0
+theme = ExtResource("4_4hy44")
+text = "FOV Effects"
+horizontal_alignment = 2
+
+[node name="MotionBlur" type="Label" parent="CanvasLayer"]
+offset_left = 1339.0
+offset_top = 861.0
+offset_right = 1917.0
+offset_bottom = 937.0
+theme = ExtResource("4_4hy44")
+text = "Motion Blur"
+horizontal_alignment = 2
+
+[node name="Time" type="Label" parent="CanvasLayer"]
+offset_left = 1566.0
+offset_top = 950.0
+offset_right = 1914.0
+offset_bottom = 1081.0
+theme = ExtResource("4_4hy44")
+text = "Time"
+vertical_alignment = 1
+
+[node name="FovCheckBox" type="CheckBox" parent="CanvasLayer"]
+offset_left = 1491.0
+offset_top = 743.0
+offset_right = 1579.0
+offset_bottom = 831.0
+theme = ExtResource("4_4hy44")
+theme_override_icons/checked = SubResource("SVGTexture_ytr4m")
+theme_override_icons/unchecked = SubResource("SVGTexture_l48gv")
+button_pressed = true
+flat = true
+
+[node name="MotionBlurCheckBox" type="CheckBox" parent="CanvasLayer"]
+offset_left = 1491.0
+offset_top = 855.0
+offset_right = 1579.0
+offset_bottom = 943.0
+theme = ExtResource("4_4hy44")
+theme_override_icons/checked = SubResource("SVGTexture_ytr4m")
+theme_override_icons/unchecked = SubResource("SVGTexture_l48gv")
+button_pressed = true
+flat = true
+
+[node name="TimeButton" type="Button" parent="CanvasLayer" node_paths=PackedStringArray("enviroment")]
+offset_left = 1490.0
+offset_top = 964.0
+offset_right = 1662.0
+offset_bottom = 1148.0
+scale = Vector2(0.5, 0.5)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ecwwl")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_kk3ma")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nrnbx")
+icon = ExtResource("6_ecwwl")
+flat = true
+icon_alignment = 1
+script = ExtResource("7_kk3ma")
+enviroment = NodePath("../../Enviroment")
+
+[connection signal="pressed" from="CanvasLayer/Play" to="." method="_on_play_pressed"]
+[connection signal="toggled" from="CanvasLayer/FovCheckBox" to="." method="_on_fov_check_box_toggled"]
+[connection signal="toggled" from="CanvasLayer/MotionBlurCheckBox" to="." method="_on_motion_blur_check_box_toggled"]
+[connection signal="pressed" from="CanvasLayer/TimeButton" to="CanvasLayer/TimeButton" method="_on_pressed"]

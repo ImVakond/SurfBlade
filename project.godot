@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="wave-game"
-run/main_scene="uid://b01axphphb3sk"
+config/name="SurfBlade"
+run/main_scene="uid://bqjbqg1fkarat"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 run/max_fps=60
 boot_splash/bg_color=Color(0, 0.159754, 0.395137, 1)
@@ -38,6 +38,11 @@ window/stretch/mode="viewport"
 PlayerDamage=""
 Shield=""
 EnemyDamage=""
+
+[gui]
+
+theme/custom_font="uid://caidocl0uk76r"
+theme/default_font_antialiasing=2
 
 [input]
 

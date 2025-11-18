@@ -1,0 +1,24 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://dgm5n44gasdl0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dmjyp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_touxu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2pn01"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tbeor"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mk0s6"]
+
+[resource]
+default_font_size = 64
+Button/styles/focus = SubResource("StyleBoxEmpty_dmjyp")
+Button/styles/hover = SubResource("StyleBoxEmpty_touxu")
+Button/styles/normal = SubResource("StyleBoxEmpty_2pn01")
+Button/styles/normal_mirrored = SubResource("StyleBoxEmpty_tbeor")
+Button/styles/pressed = null
+CheckBox/colors/font_color = Color(1, 1, 1, 1)
+CheckBox/styles/focus = SubResource("StyleBoxEmpty_mk0s6")
+CheckButton/constants/align_to_largest_stylebox = 0
+CheckButton/font_sizes/font_size = 64
+Label/colors/font_color = Color(0, 0, 0, 1)

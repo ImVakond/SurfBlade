@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b01axphphb3sk"]
+[gd_scene load_steps=13 format=3 uid="uid://b01axphphb3sk"]
 
 [ext_resource type="Script" uid="uid://b321veh5c3xks" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://buok0w254t0wh" path="res://player.tscn" id="1_ig7tw"]
@@ -43,15 +43,6 @@ shader_parameter/fractal = SubResource("NoiseTexture2D_h2yge")
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_7mycd"]
 exposure_multiplier = 1.566
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_7mycd"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7mycd"]
-transparency = 1
-albedo_color = Color(1, 1, 1, 0.568627)
-
-[sub_resource type="BoxMesh" id="BoxMesh_272bh"]
-material = SubResource("StandardMaterial3D_7mycd")
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_1bvp3")
@@ -112,15 +103,6 @@ light_color = Color(0.905882, 1, 1, 1)
 light_energy = 0.5
 light_indirect_energy = 0.0
 sky_mode = 2
-
-[node name="TestWall" type="StaticBody3D" parent="Enviroment"]
-transform = Transform3D(0.720273, 0, 4.6516, 0, 18.0564, 0, -0.693691, 0, 4.82985, 0, -17.2478, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Enviroment/TestWall"]
-shape = SubResource("BoxShape3D_7mycd")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Enviroment/TestWall"]
-mesh = SubResource("BoxMesh_272bh")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.730162, 0.683274, 0, -0.683274, 0.730162, 0, 11.3468, 7.08274)
