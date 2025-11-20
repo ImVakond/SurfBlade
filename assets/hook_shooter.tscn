@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://c6epl5nbbij65"]
+
+[ext_resource type="PackedScene" uid="uid://qf6dna31itwy" path="res://assets/hook_body.tscn" id="1_vyc45"]
+
+[sub_resource type="GDScript" id="GDScript_vyc45"]
+resource_name = "HookShooter"
+script/source = "extends Node3D
+
+
+@export var hook_visible : bool = true:
+	set(value):
+		hook_visible = value
+		$HookBody.visible = value
+"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c6ajf"]
+transparency = 1
+depth_draw_mode = 1
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vl15p"]
+material = SubResource("StandardMaterial3D_c6ajf")
+size = Vector3(1, 10, 1)
+
+[node name="HookShooter" type="Node3D"]
+script = SubResource("GDScript_vyc45")
+
+[node name="HookBody" parent="." instance=ExtResource("1_vyc45")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, -6.84773)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, -1.74846e-08, 0.6, 0, -0.4, -2.62268e-08, 0, 0, -2.50018)
+mesh = SubResource("BoxMesh_vl15p")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(2.29282e-15, 1.74846e-08, 0.6, 1.2, -1.74846e-08, 0, 5.24537e-08, 0.4, -2.62268e-08, 0, 0, -2.50018)
+mesh = SubResource("BoxMesh_vl15p")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 0.2, 0, 0, 0, 0.8, 0, -0.397862, -0.740451)
+mesh = SubResource("BoxMesh_vl15p")

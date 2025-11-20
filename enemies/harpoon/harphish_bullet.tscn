@@ -1,11 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://djsy4i2ta2uo2"]
 
 [ext_resource type="Script" uid="uid://cyrysihyl1pes" path="res://enemies/harpoon/harphish_bullet.gd" id="1_qqpij"]
+[ext_resource type="PackedScene" uid="uid://qf6dna31itwy" path="res://assets/hook_body.tscn" id="2_naks1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lxvql"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_ni117"]
-size = Vector3(0.2, 0.2, 0.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pm3a3"]
 size = Vector3(0.1, 0.1, 0.1)
@@ -21,11 +19,11 @@ disabled = true
 collision_layer = 3
 collision_mask = 3
 
-[node name="Mesh" type="MeshInstance3D" parent="HarphishBulletArea"]
-mesh = SubResource("BoxMesh_ni117")
-
 [node name="Collider" type="CollisionShape3D" parent="HarphishBulletArea"]
 shape = SubResource("BoxShape3D_pm3a3")
+
+[node name="HookBody" parent="HarphishBulletArea" instance=ExtResource("2_naks1")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 5.0

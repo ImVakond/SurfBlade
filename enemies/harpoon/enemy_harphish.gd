@@ -5,6 +5,7 @@ class_name Harphish
 signal died(enemy : CharacterBody3D)
 signal shoot(pos : Vector3,rot : Vector3)
 
+@onready var hook_body := %HookShooter
 @onready var state_machine : StateMachine = %StateMachine
 @onready var hitbox := %Hitbox
 

@@ -1,10 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://bmywilibhhjqb"]
 
 [ext_resource type="Script" uid="uid://b6ug6pyh540am" path="res://general/item.gd" id="1_tnite"]
+[ext_resource type="PackedScene" uid="uid://c6epl5nbbij65" path="res://assets/hook_shooter.tscn" id="2_egioh"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vpy52"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_tnite"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_tnite"]
 radius = 1.5
@@ -14,9 +13,6 @@ script = ExtResource("1_tnite")
 
 [node name="Collider" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_vpy52")
-
-[node name="Mesh" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_tnite")
 
 [node name="Label" type="Label3D" parent="."]
 unique_name_in_owner = true
@@ -43,6 +39,9 @@ shape = SubResource("SphereShape3D_tnite")
 unique_name_in_owner = true
 wait_time = 0.1
 one_shot = true
+
+[node name="HookShooter" parent="." instance=ExtResource("2_egioh")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0.837828)
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="input_event" from="ItemArea" to="." method="_on_area_3d_input_event"]

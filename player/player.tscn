@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://fn4ue284pmgv" path="res://player/motion_blur/motion_blur.tscn" id="2_urp6f"]
 [ext_resource type="Script" uid="uid://b0wdhtbjsknqa" path="res://player/bat.gd" id="3_2hs0m"]
 [ext_resource type="Script" uid="uid://cbxtqhmhq4ogv" path="res://general/move_and_slide.gd" id="3_i3pqv"]
+[ext_resource type="PackedScene" uid="uid://c6epl5nbbij65" path="res://assets/hook_shooter.tscn" id="3_wodsf"]
 [ext_resource type="Script" uid="uid://dwju4ladeygwc" path="res://player/hook.gd" id="4_2hs0m"]
 [ext_resource type="Script" uid="uid://bi38pv7wcf8qu" path="res://player/movement_state_machine.gd" id="5_dw050"]
 [ext_resource type="Script" uid="uid://bqo105xxgk6xf" path="res://player/onboard.gd" id="6_b26j0"]
@@ -108,9 +109,6 @@ albedo_color = Color(1, 1, 1, 0.996078)
 [sub_resource type="CylinderMesh" id="CylinderMesh_i3pqv"]
 material = SubResource("StandardMaterial3D_ivps1")
 
-[sub_resource type="BoxMesh" id="BoxMesh_2hs0m"]
-material = SubResource("StandardMaterial3D_ivps1")
-
 [sub_resource type="LabelSettings" id="LabelSettings_i3pqv"]
 font_size = 64
 
@@ -192,17 +190,15 @@ script = SubResource("GDScript_nvl01")
 [node name="Weapons" type="Node3D" parent="CameraHolder"]
 script = SubResource("GDScript_2hs0m")
 
+[node name="HookMesh" parent="CameraHolder/Weapons" instance=ExtResource("3_wodsf")]
+unique_name_in_owner = true
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.248304, 0.105194, -0.43615)
+visible = false
+
 [node name="BladeMesh" type="MeshInstance3D" parent="CameraHolder/Weapons"]
 unique_name_in_owner = true
 transform = Transform3D(0.1, 0, 0, 0, 1, 0, 0, 0, 0.1, 0.327149, 0, -0.511155)
 mesh = SubResource("CylinderMesh_i3pqv")
-skeleton = NodePath("../../AttackArea")
-
-[node name="HookMesh" type="MeshInstance3D" parent="CameraHolder/Weapons"]
-unique_name_in_owner = true
-transform = Transform3D(0.237973, 0, 0, 0, 0.166088, 0, 0, 0, 0.1, 0.315017, 0.523027, -0.511155)
-visible = false
-mesh = SubResource("BoxMesh_2hs0m")
 skeleton = NodePath("../../AttackArea")
 
 [node name="Targeter" type="RayCast3D" parent="CameraHolder"]
@@ -275,11 +271,10 @@ hitbox = NodePath("../../Hitbox")
 
 [node name="ComboBar" type="TextureProgressBar" parent="CanvasLayer"]
 unique_name_in_owner = true
-offset_left = 1333.0
-offset_top = 1.0
-offset_right = 1589.0
-offset_bottom = 257.0
-scale = Vector2(2.33657, 4.2235)
+offset_right = 1920.0
+offset_bottom = 1080.0
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(960, 540)
 fill_mode = 3
 texture_under = ExtResource("13_kb6p2")
 texture_progress = ExtResource("13_kb6p2")

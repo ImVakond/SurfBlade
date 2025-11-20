@@ -44,7 +44,7 @@ func shoot_harpoon(pos : Vector3,rot : Vector3) -> void:
 	var bullet : Node3D = HARPHISH_BULLET.instantiate()
 	await Global.main.call_deferred("add_child",bullet)
 	bullet.rotation = rot
-	bullet.position = pos
+	bullet.position = pos + Vector3(0,0.1,0)
 
 func enemy_died(enemy : Node3D) -> void:
 	if enemy is Harphish:
