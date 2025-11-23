@@ -25,6 +25,7 @@ func physics_update(delta : float) -> void:
 		target_speed = -1
 	else:
 		target_speed = clampf(target_speed-owner.ACCELARATION,0,owner.SPEED)
+
 	var target_direction : Vector3 = owner.transform.basis * Vector3(0, 0, -target_speed * owner.SPEED) + Vector3(0,owner.velocity.y,0)
 	owner.velocity = owner.velocity.move_toward(target_direction,owner.ACCELARATION * delta)
 	if !owner.is_on_floor_or_water():

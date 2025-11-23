@@ -13,7 +13,7 @@ func handle_input(event : InputEvent) -> void:
 		if !owner.active_hook:
 			var hook : CharacterBody3D = HOOK_BODY.instantiate()
 			await owner.call_deferred("add_sibling",hook)
-			hook.global_rotation = owner.cameraholder.global_rotation
+			hook.rotation = owner.cameraholder.global_rotation
 			hook.position = owner.position
 			owner.active_hook = hook
 			hook.connect("time_exceeded",throw_hook)

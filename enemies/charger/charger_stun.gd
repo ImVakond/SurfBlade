@@ -2,7 +2,7 @@ extends State
 
 
 func enter(_last : String,_data : Dictionary = {}) -> void:
-	owner.velocity *= Vector3(0,1,0)
+	owner.velocity = Vector3(0,-10,0)
 	await get_tree().create_timer(2).timeout
 	switch(&"Walk")
 

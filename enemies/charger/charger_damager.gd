@@ -12,4 +12,5 @@ signal parried
 func _on_area_entered(area : Area3D) -> void:
 	if area.is_in_group("Shield") or area.is_in_group("PlayerDamage"):
 		disabled = true
+		Global.spawn_text.emit(5,"Parried")
 		emit_signal("parried")

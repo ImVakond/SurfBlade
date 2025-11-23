@@ -30,28 +30,28 @@ albedo_texture = SubResource("ViewportTexture_272bh")
 [sub_resource type="SphereShape3D" id="SphereShape3D_rpg35"]
 radius = 0.697509
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rpg35"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i6621"]
 depth_draw_mode = 1
 albedo_color = Color(1, 0.439216, 0.109804, 1)
 roughness = 0.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_4haie"]
-material = SubResource("StandardMaterial3D_rpg35")
+material = SubResource("StandardMaterial3D_i6621")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4haie"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tdo3o"]
 depth_draw_mode = 1
 roughness = 0.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_i6621"]
-material = SubResource("StandardMaterial3D_4haie")
+material = SubResource("StandardMaterial3D_tdo3o")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i6621"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3owem"]
 depth_draw_mode = 1
 albedo_color = Color(0, 0, 0, 1)
 roughness = 0.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_tdo3o"]
-material = SubResource("StandardMaterial3D_i6621")
+material = SubResource("StandardMaterial3D_3owem")
 
 [node name="EnemyHarphish" type="CharacterBody3D"]
 collision_layer = 6

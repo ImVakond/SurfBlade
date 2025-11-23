@@ -136,7 +136,8 @@ transform = Transform3D(1, 0, 0, 0, 0.730162, 0.683274, 0, -0.683274, 0.730162, 
 
 [node name="EnemyManager" type="Node3D" parent="."]
 script = ExtResource("6_7mycd")
-max_chargers = 0
+max_fishes = 5
+max_chargers = 5
 
 [node name="Spawn" type="Timer" parent="."]
 wait_time = 10.0

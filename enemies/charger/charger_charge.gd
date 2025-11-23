@@ -3,7 +3,7 @@ extends State
 func enter(_last : String,_data : Dictionary = {}) -> void:
 	owner.damager.disabled = false
 	owner.rotation.y = owner.looker_node.rotation.y
-	owner.velocity = owner.transform.basis * Vector3(0,0,-100) + Vector3(0,10,0)
+	owner.velocity = owner.looker_node.transform.basis * Vector3(0,0,-40) + Vector3(0,0,0)
 	await get_tree().create_timer(0.5).timeout
 	switch(&"Stun")
 

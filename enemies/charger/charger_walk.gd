@@ -5,12 +5,12 @@ func enter(_last:String,_data:Dictionary={}) -> void:
 
 func update(delta : float) -> void:
 	owner.looker_node.look_at_from_position(owner.global_position,Global.player.global_position)
-	owner.rotation.y = lerp_angle(owner.rotation.y,owner.looker_node.rotation.y,1 * delta)
+	owner.rotation.y = lerp_angle(owner.rotation.y,owner.looker_node.rotation.y,5 * delta)
 	owner.global_position.y = min(owner.global_position.y,0)
-	if get_distance() < 20:
+	if get_distance() < 15:
 		owner.velocity *= 0
 		if owner.charge_cooldown.is_stopped():
-			switch(&"Getready")
+			switch(&"Charge")
 	elif get_distance() > 100:
 		switch(&"Descend")
 		owner.velocity *= 0
