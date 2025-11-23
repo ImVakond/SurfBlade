@@ -14,6 +14,6 @@ func _on_hook_area_body_entered(body : Node3D) -> void:
 
 func _on_harphish_bullet_area_area_entered(area : Area3D):
 	if area.is_in_group("Shield"):
-		Global.spawn_text.emit(5,"Parried")
+		Global.add_score.emit(5,"Parried")
 		set_process(false)
 		call_deferred("queue_free")

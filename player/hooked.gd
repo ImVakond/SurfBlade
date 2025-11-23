@@ -4,7 +4,7 @@ extends State
 
 func enter(from : String, _data : Dictionary = {}) -> void:
 	if from != &"Hooked":
-		Global.spawn_text.emit(5,"Hooked")
+		Global.add_score.emit(5,"Hooked")
 
 func update(_delta : float) -> void:
 	if !owner.active_hook:

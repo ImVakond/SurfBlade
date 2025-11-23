@@ -1,6 +1,7 @@
 extends State
 
 var target_speed : Vector2
+var changed : float = 0
 
 func enter(_from : String, _data : Dictionary = {}) -> void:
 	owner.controllabel.change({
@@ -11,7 +12,7 @@ func enter(_from : String, _data : Dictionary = {}) -> void:
 		"Space" : ""
 	})
 	owner.surf_board_holder.get_child(0).position.y = -0.8
-
+	changed = 0
 func physics_update(delta : float) -> void:
 	if Input.is_action_pressed("forward"):
 		target_speed.x = 1
@@ -37,3 +38,10 @@ func handle_input(event : InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		owner.cameraholder.rotate_object_local(Vector3(1,0,0),-event.relative.y / 270)
 		owner.rotate_object_local(Vector3(0,1,0),-event.relative.x / 270)
+		changed += event.relative.y / 10
+
+func exit() -> void:
+	if owner.headcast.is_colliding():
+		return
+	if abs(changed) > 100:
+		Global.add_score.emit(5,"Flip")

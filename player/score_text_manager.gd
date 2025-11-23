@@ -12,7 +12,7 @@ var format_neg : String = "%d %s"
 const MARGINS : int = 500
 
 func _ready() -> void:
-	Global.spawn_text.connect(spawn)
+	Global.add_score.connect(spawn)
 	for _i in range(10):
 		var label : Label = Label.new()
 		labels.append(label)

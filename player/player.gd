@@ -69,7 +69,7 @@ func _on_combo_timer_timeout() -> void:
 
 
 func _on_hitbox_took_damage() -> void:
-	Global.spawn_text.emit(-5,"Hit")
+	Global.add_score.emit(-5,"Hit")
 
 
 func _on_hitbox_died() -> void:

@@ -12,7 +12,7 @@ func enter(_from : String, _data : Dictionary = {}) -> void:
 	})
 	if owner.headcast.is_colliding():
 		owner.wrong_land.emit()
-		Global.spawn_text.emit(-50,"Busted Landing")
+		Global.add_score.emit(-50,"Busted Landing")
 		owner.hitbox.health -= 1
 		owner.cameraholder.rotation_degrees.x = clampf(owner.cameraholder.rotation_degrees.x,-80,90)
 

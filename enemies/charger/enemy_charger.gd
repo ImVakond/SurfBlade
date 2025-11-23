@@ -23,7 +23,7 @@ func _on_hitbox_took_damage() -> void:
 
 func _on_hitbox_died() -> void:
 	if state_machine:
-		Global.spawn_text.emit(10,"Charger")
+		Global.add_score.emit(10,"Charger")
 		state_machine._transition_to_next_state(&"Inactive")
 		died.emit(self)
 

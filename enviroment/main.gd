@@ -14,4 +14,10 @@ func _ready() -> void:
 func _process(_delta : float) -> void:
 	ppos = Vector2(0.5,0.5) + Vector2(Global.player.global_position.x,Global.player.global_position.z) / Vector2(5000,5000)
 	material.set_shader_parameter("center_position",ppos)
-	
+
+# TODO:
+# - Combo
+# - Pufferfish enemy
+# - Game logo
+# - SFX
+# - Music
