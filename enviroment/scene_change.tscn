@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://ce3v4apcvvt5l"]
+[gd_scene load_steps=3 format=3 uid="uid://ce3v4apcvvt5l"]
 
 [ext_resource type="Script" uid="uid://yovvij07btvu" path="res://enviroment/scene_change.gd" id="1_vfg1q"]
+[ext_resource type="Texture2D" uid="uid://3g6huurtmhmf" path="res://assets/game_logo_transparent.png" id="2_gpxqq"]
 
 [node name="SceneChange" type="CanvasLayer"]
 script = ExtResource("1_vfg1q")
@@ -13,3 +14,11 @@ offset_right = 2076.0
 offset_bottom = 1252.0
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
+
+[node name="TextureRect" type="TextureRect" parent="Effect"]
+layout_mode = 0
+offset_left = 122.0
+offset_top = 61.0
+offset_right = 2042.0
+offset_bottom = 1142.0
+texture = ExtResource("2_gpxqq")

@@ -18,6 +18,6 @@ func _process(_delta : float) -> void:
 # TODO:
 # - Combo
 # - Pufferfish enemy
-# - Game logo
+# - Waves
 # - SFX
 # - Music
