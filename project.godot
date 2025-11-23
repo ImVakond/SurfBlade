@@ -14,8 +14,9 @@ config/name="SurfBlade"
 run/main_scene="uid://bqjbqg1fkarat"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 run/max_fps=60
-boot_splash/bg_color=Color(0, 0.159754, 0.395137, 1)
+boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
+boot_splash/use_filter=false
 
 [autoload]
 
@@ -110,9 +111,14 @@ Parry={
 [layer_names]
 
 3d_physics/layer_3="Hook"
+3d_physics/layer_4="groundcast"
 
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/ssao/quality=0
+lightmapping/lightmap_gi/use_bicubic_filter=false
+environment/volumetric_fog/use_filter=0
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

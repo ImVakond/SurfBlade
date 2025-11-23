@@ -4,22 +4,27 @@
 [ext_resource type="PackedScene" uid="uid://qf6dna31itwy" path="res://assets/hook_body.tscn" id="2_naks1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lxvql"]
+size = Vector3(1, 1, 1.87305)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pm3a3"]
-size = Vector3(0.1, 0.1, 0.1)
+size = Vector3(0.487305, 0.44165, 1.05469)
 
 [node name="HarphishBullet" type="CharacterBody3D"]
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_qqpij")
 
 [node name="Col" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_lxvql")
 disabled = true
+debug_color = Color(0.984314, 0, 0, 1)
 
 [node name="HarphishBulletArea" type="Area3D" parent="." groups=["EnemyDamage"]]
 collision_layer = 3
 collision_mask = 3
 
 [node name="Collider" type="CollisionShape3D" parent="HarphishBulletArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.176092)
 shape = SubResource("BoxShape3D_pm3a3")
 
 [node name="HookBody" parent="HarphishBulletArea" instance=ExtResource("2_naks1")]

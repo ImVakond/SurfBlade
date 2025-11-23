@@ -10,6 +10,14 @@ func enter(_from : String, _data : Dictionary = {}) -> void:
 		"D" : "",
 		"Space" : "Jump"
 	})
+	if owner.headcast.is_colliding():
+		owner.wrong_land.emit()
+		Global.spawn_text.emit(-50,"Busted Landing")
+		owner.hitbox.health -= 1
+		owner.cameraholder.rotation_degrees.x = clampf(owner.cameraholder.rotation_degrees.x,-80,90)
+
+	owner.surf_board_holder.rotation_degrees = Vector3(0,0,0)
+	owner.surf_board_holder.get_child(0).position.y = -0.6
 func physics_update(delta : float) -> void:
 	if Input.is_action_pressed("forward"):
 		target_speed = 1

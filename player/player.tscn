@@ -1,20 +1,26 @@
-[gd_scene load_steps=33 format=3 uid="uid://buok0w254t0wh"]
+[gd_scene load_steps=39 format=3 uid="uid://buok0w254t0wh"]
 
 [ext_resource type="Script" uid="uid://brssn1of78q8a" path="res://player/player.gd" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://dudbeybe481tr" path="res://general/gravity.gd" id="2_onrkg"]
-[ext_resource type="Script" uid="uid://6bj42mo0apx7" path="res://player/weapon_state_machine.gd" id="2_sweqy"]
 [ext_resource type="PackedScene" uid="uid://fn4ue284pmgv" path="res://player/motion_blur/motion_blur.tscn" id="2_urp6f"]
 [ext_resource type="Script" uid="uid://b0wdhtbjsknqa" path="res://player/bat.gd" id="3_2hs0m"]
 [ext_resource type="Script" uid="uid://cbxtqhmhq4ogv" path="res://general/move_and_slide.gd" id="3_i3pqv"]
 [ext_resource type="PackedScene" uid="uid://c6epl5nbbij65" path="res://assets/hook_shooter.tscn" id="3_wodsf"]
 [ext_resource type="Script" uid="uid://dwju4ladeygwc" path="res://player/hook.gd" id="4_2hs0m"]
-[ext_resource type="Script" uid="uid://bi38pv7wcf8qu" path="res://player/movement_state_machine.gd" id="5_dw050"]
+[ext_resource type="Script" uid="uid://ckhi5n4l5gx12" path="res://general/state_machine.gd" id="4_kb6p2"]
+[ext_resource type="PackedScene" uid="uid://cvx6v8rj1on2v" path="res://assets/blade_mesh.tscn" id="4_tqiix"]
 [ext_resource type="Script" uid="uid://bqo105xxgk6xf" path="res://player/onboard.gd" id="6_b26j0"]
 [ext_resource type="Script" uid="uid://bmr4ygcr503u1" path="res://player/onboardjump.gd" id="7_n7ghd"]
+[ext_resource type="Script" uid="uid://oqi2dn65bcxo" path="res://player/parry.gd" id="8_e7oew"]
 [ext_resource type="Script" uid="uid://ds33y5k5nxgsx" path="res://player/hooked.gd" id="8_nvl01"]
 [ext_resource type="Script" uid="uid://brkrto575lmsh" path="res://ui/controls.gd" id="9_b26j0"]
+[ext_resource type="Script" uid="uid://do43f7ixqvpe" path="res://player/inactive.gd" id="12_65viv"]
 [ext_resource type="Script" uid="uid://bb7oye8qve2pw" path="res://general/hitbox.gd" id="12_ivps1"]
 [ext_resource type="Texture2D" uid="uid://bxl5c2h5b8820" path="res://ui/combo_empty.png" id="13_kb6p2"]
+[ext_resource type="Script" uid="uid://csxjwus1uujj7" path="res://player/score_text_manager.gd" id="14_wodsf"]
+[ext_resource type="PackedScene" uid="uid://dj2bnx6bntw6s" path="res://assets/board_mesh.tscn" id="16_32hag"]
+[ext_resource type="Texture2D" uid="uid://d1vm7j1ju3snq" path="res://ui/health_empty.png" id="16_c35mf"]
+[ext_resource type="Theme" uid="uid://dgm5n44gasdl0" path="res://ui/ui_theme.tres" id="19_x7c3f"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
 
@@ -67,68 +73,62 @@ _data = {
 [sub_resource type="BoxShape3D" id="BoxShape3D_nvl01"]
 size = Vector3(1.2, 2.2, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nvl01"]
-transparency = 1
-albedo_color = Color(1, 0.498039, 0.470588, 0.509804)
-
-[sub_resource type="BoxMesh" id="BoxMesh_ivps1"]
-material = SubResource("StandardMaterial3D_nvl01")
-
-[sub_resource type="GDScript" id="GDScript_nvl01"]
-script/source = "extends MeshInstance3D
-
-
-func _process(_delta : float) -> void:
-	visible = !get_parent().disabled
-"
-
 [sub_resource type="GDScript" id="GDScript_2hs0m"]
 resource_name = "WeaponMeshManager"
 script/source = "extends Node3D
 
 
 @export var state_machine : StateMachine
-@onready var blade_mesh := %BladeMesh
-@onready var hook_mesh := %HookMesh
 
 func _on_weapon_state_machine_switched(state : State) -> void:
 	for child in get_children():
 		child.visible = false
-	match state.name:
-		\"Attack\":
-			blade_mesh.visible = true
-		\"Hook\":
-			hook_mesh.visible = true
-	
+	find_child(state.name + \"Mesh\").visible = true
 "
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ivps1"]
-transparency = 1
-albedo_color = Color(1, 1, 1, 0.996078)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x7c3f"]
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_i3pqv"]
-material = SubResource("StandardMaterial3D_ivps1")
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bjvpn"]
+
+[sub_resource type="GDScript" id="GDScript_bjvpn"]
+resource_name = "Restart"
+script/source = "extends Button
+
+
+func _pressed() -> void:
+	Global.points = 0
+	Global.is_ready = false
+	get_tree().paused = false
+	get_tree().reload_current_scene()
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_wodsf"]
+font_size = 64
+font_color = Color(0.643137, 0.109804, 1, 1)
+
+[sub_resource type="GDScript" id="GDScript_wodsf"]
+resource_name = "Score"
+script/source = "extends Label
+
+var displayed : float = 0.0
+
+func _process(_delta : float) -> void:
+	displayed = move_toward(displayed,Global.points,0.4)
+	text = \"Score: \\n\" + str(int(displayed))
+"
 
 [sub_resource type="LabelSettings" id="LabelSettings_i3pqv"]
 font_size = 64
 
-[sub_resource type="GDScript" id="GDScript_ivps1"]
-script/source = "extends ProgressBar
-
-
-@export var hitbox : Hitbox
-
-func _process(_delta : float) -> void:
-	value = hitbox.health
-	max_value = hitbox.max_health
-"
+[sub_resource type="LabelSettings" id="LabelSettings_32hag"]
+font_size = 64
+font_color = Color(0.643137, 0.109804, 1, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_urp6f"]
 radius = 0.416016
 height = 1.72461
 
 [node name="Player" type="CharacterBody3D"]
-transform = Transform3D(2.26895, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
@@ -143,10 +143,11 @@ shape = SubResource("CapsuleShape3D_4flbx")
 
 [node name="CameraHolder" type="Node3D" parent="."]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0789606, 0)
 
 [node name="Camera" type="Camera3D" parent="CameraHolder"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.560683, 0.172314)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0.0952111)
 fov = 70.0
 
 [node name="motion_blur" parent="CameraHolder/Camera" instance=ExtResource("2_urp6f")]
@@ -180,26 +181,21 @@ shape = SubResource("BoxShape3D_nvl01")
 disabled = true
 debug_color = Color(0, 0.6, 0.701961, 1)
 
-[node name="ParryMesh" type="MeshInstance3D" parent="CameraHolder/ParryBlock/ParryCollision"]
-transform = Transform3D(1.24824, 0, 0, 0, 1.73315, 0, 0, 0, 0.278928, 0, 0.230224, 0.00592083)
-visible = false
-mesh = SubResource("BoxMesh_ivps1")
-skeleton = NodePath("../..")
-script = SubResource("GDScript_nvl01")
-
 [node name="Weapons" type="Node3D" parent="CameraHolder"]
+unique_name_in_owner = true
 script = SubResource("GDScript_2hs0m")
 
 [node name="HookMesh" parent="CameraHolder/Weapons" instance=ExtResource("3_wodsf")]
 unique_name_in_owner = true
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.248304, 0.105194, -0.43615)
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.597806, 0.105194, -0.43615)
 visible = false
 
-[node name="BladeMesh" type="MeshInstance3D" parent="CameraHolder/Weapons"]
-unique_name_in_owner = true
-transform = Transform3D(0.1, 0, 0, 0, 1, 0, 0, 0, 0.1, 0.327149, 0, -0.511155)
-mesh = SubResource("CylinderMesh_i3pqv")
-skeleton = NodePath("../../AttackArea")
+[node name="AttackMesh" parent="CameraHolder/Weapons" instance=ExtResource("4_tqiix")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.314459, 0.404756, -0.509011)
+
+[node name="ParryMesh" parent="CameraHolder/Weapons" instance=ExtResource("4_tqiix")]
+transform = Transform3D(-3.39221e-09, -0.0630676, 0.0776046, -2.75677e-09, 0.0776046, 0.0630676, -0.1, 0, -4.37114e-09, 0.103737, 0.404756, -0.509011)
+visible = false
 
 [node name="Targeter" type="RayCast3D" parent="CameraHolder"]
 unique_name_in_owner = true
@@ -208,9 +204,17 @@ collide_with_areas = true
 collide_with_bodies = false
 debug_shape_thickness = 5
 
+[node name="HeadCast" type="RayCast3D" parent="CameraHolder"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.529861, 0)
+target_position = Vector3(0, 2, 0)
+collision_mask = 8
+collide_with_areas = true
+collide_with_bodies = false
+
 [node name="WeaponStateMachine" type="Node" parent="."]
 unique_name_in_owner = true
-script = ExtResource("2_sweqy")
+script = ExtResource("4_kb6p2")
 
 [node name="Attack" type="Node" parent="WeaponStateMachine"]
 script = ExtResource("3_2hs0m")
@@ -218,9 +222,13 @@ script = ExtResource("3_2hs0m")
 [node name="Hook" type="Node" parent="WeaponStateMachine"]
 script = ExtResource("4_2hs0m")
 
+[node name="Parry" type="Node" parent="WeaponStateMachine"]
+script = ExtResource("8_e7oew")
+metadata/_custom_type_script = "uid://eiklno1g3x35"
+
 [node name="MovementStateMachine" type="Node" parent="."]
 unique_name_in_owner = true
-script = ExtResource("5_dw050")
+script = ExtResource("4_kb6p2")
 
 [node name="Onboard" type="Node" parent="MovementStateMachine"]
 script = ExtResource("6_b26j0")
@@ -234,6 +242,10 @@ metadata/_custom_type_script = "uid://eiklno1g3x35"
 script = ExtResource("8_nvl01")
 metadata/_custom_type_script = "uid://eiklno1g3x35"
 
+[node name="Inactive" type="Node" parent="MovementStateMachine"]
+script = ExtResource("12_65viv")
+metadata/_custom_type_script = "uid://eiklno1g3x35"
+
 [node name="Gravity" type="Node" parent="."]
 script = ExtResource("2_onrkg")
 enabled = false
@@ -243,10 +255,52 @@ metadata/_custom_type_script = "uid://dudbeybe481tr"
 script = ExtResource("3_i3pqv")
 metadata/_custom_type_script = "uid://cbxtqhmhq4ogv"
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="."]
+process_mode = 3
 
-[node name="Crosshair" type="Label" parent="CanvasLayer"]
+[node name="RestartButton" type="Button" parent="UI"]
 unique_name_in_owner = true
+process_mode = 3
+offset_top = 1082.0
+offset_right = 1918.0
+offset_bottom = 1158.0
+pivot_offset = Vector2(55, 83)
+theme = ExtResource("19_x7c3f")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_x7c3f")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_bjvpn")
+text = "Restart"
+script = SubResource("GDScript_bjvpn")
+
+[node name="Score" type="Label" parent="UI"]
+z_index = 5
+offset_top = 10.0
+offset_right = 1921.0
+offset_bottom = 346.0
+text = "0"
+label_settings = SubResource("LabelSettings_wodsf")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = SubResource("GDScript_wodsf")
+
+[node name="DamageEffect" type="ColorRect" parent="UI"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+offset_left = -36.0
+offset_top = -39.0
+offset_right = 1954.0
+offset_bottom = 1111.0
+mouse_filter = 2
+color = Color(1, 0.0117647, 0, 0.392157)
+
+[node name="ActiveUI" type="Control" parent="UI"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Crosshair" type="Label" parent="UI/ActiveUI"]
+unique_name_in_owner = true
+layout_mode = 0
 offset_right = 1926.0
 offset_bottom = 1071.0
 text = "o"
@@ -254,24 +308,20 @@ label_settings = SubResource("LabelSettings_i3pqv")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Controls" type="Label" parent="CanvasLayer"]
+[node name="Controls" type="Label" parent="UI/ActiveUI"]
 unique_name_in_owner = true
+layout_mode = 0
 offset_left = 2.0
 offset_right = 281.0
 offset_bottom = 1075.0
 vertical_alignment = 1
 script = ExtResource("9_b26j0")
 
-[node name="HpBar" type="ProgressBar" parent="CanvasLayer" node_paths=PackedStringArray("hitbox")]
-offset_left = 58.0
-offset_right = 385.0
-offset_bottom = 27.0
-script = SubResource("GDScript_ivps1")
-hitbox = NodePath("../../Hitbox")
-
-[node name="ComboBar" type="TextureProgressBar" parent="CanvasLayer"]
+[node name="ComboBar" type="TextureProgressBar" parent="UI/ActiveUI"]
 unique_name_in_owner = true
-offset_right = 1920.0
+layout_mode = 0
+offset_left = -100.0
+offset_right = 1820.0
 offset_bottom = 1080.0
 scale = Vector2(0.5, 0.5)
 pivot_offset = Vector2(960, 540)
@@ -279,22 +329,43 @@ fill_mode = 3
 texture_under = ExtResource("13_kb6p2")
 texture_progress = ExtResource("13_kb6p2")
 tint_under = Color(1, 1, 1, 0)
+tint_progress = Color(0.643137, 0.109804, 1, 1)
+
+[node name="HealthBar" type="TextureProgressBar" parent="UI/ActiveUI"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 100.0
+offset_right = 2020.0
+offset_bottom = 1080.0
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(960, 546)
+max_value = 5.0
+fill_mode = 3
+texture_under = ExtResource("16_c35mf")
+texture_progress = ExtResource("16_c35mf")
+tint_under = Color(1, 1, 1, 0)
 tint_progress = Color(1, 0, 0, 1)
 
-[node name="ComboTimer" type="Timer" parent="CanvasLayer"]
+[node name="ComboTimer" type="Timer" parent="UI/ActiveUI"]
 unique_name_in_owner = true
-wait_time = 0.001
 one_shot = true
+ignore_time_scale = true
+
+[node name="ScoreTextManager" type="Control" parent="UI/ActiveUI"]
+anchors_preset = 0
+script = ExtResource("14_wodsf")
+label_settings = SubResource("LabelSettings_32hag")
 
 [node name="Knockbackcd" type="Timer" parent="."]
 unique_name_in_owner = true
 wait_time = 0.1
 one_shot = true
 
-[node name="Hitbox" type="Area3D" parent="." node_paths=PackedStringArray("Collider")]
+[node name="Hitbox" type="Area3D" parent="." node_paths=PackedStringArray("Collider", "inv_frames")]
+unique_name_in_owner = true
 script = ExtResource("12_ivps1")
 Collider = NodePath("CollisionShape3D")
-max_health = 100.0
+inv_frames = NodePath("../InvFrame")
 enemy = false
 metadata/_custom_type_script = "uid://bb7oye8qve2pw"
 
@@ -302,7 +373,20 @@ metadata/_custom_type_script = "uid://bb7oye8qve2pw"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0491906)
 shape = SubResource("CapsuleShape3D_urp6f")
 
+[node name="SurfBoardHolder" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+
+[node name="BoardMesh" parent="SurfBoardHolder" instance=ExtResource("16_32hag")]
+transform = Transform3D(-4.37114e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.37114e-09, 0, -0.6, 0)
+
+[node name="InvFrame" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
 [connection signal="area_entered" from="CameraHolder/AttackArea" to="." method="_on_attack_area_area_entered"]
 [connection signal="switched" from="WeaponStateMachine" to="CameraHolder/Weapons" method="_on_weapon_state_machine_switched"]
-[connection signal="switched" from="WeaponStateMachine" to="CanvasLayer/Controls" method="_on_weapon_state_machine_switched"]
-[connection signal="timeout" from="CanvasLayer/ComboTimer" to="." method="_on_combo_timer_timeout"]
+[connection signal="switched" from="WeaponStateMachine" to="UI/ActiveUI/Controls" method="_on_weapon_state_machine_switched"]
+[connection signal="timeout" from="UI/ActiveUI/ComboTimer" to="." method="_on_combo_timer_timeout"]
+[connection signal="died" from="Hitbox" to="." method="_on_hitbox_died"]
+[connection signal="took_damage" from="Hitbox" to="." method="_on_hitbox_took_damage"]

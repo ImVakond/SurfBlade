@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://ce3v4apcvvt5l"]
+
+[ext_resource type="Script" uid="uid://yovvij07btvu" path="res://enviroment/scene_change.gd" id="1_vfg1q"]
+
+[node name="SceneChange" type="CanvasLayer"]
+script = ExtResource("1_vfg1q")
+
+[node name="Effect" type="ColorRect" parent="."]
+unique_name_in_owner = true
+offset_left = -121.0
+offset_top = -111.0
+offset_right = 2076.0
+offset_bottom = 1252.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

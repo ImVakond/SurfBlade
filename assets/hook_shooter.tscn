@@ -14,6 +14,7 @@ script/source = "extends Node3D
 "
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c6ajf"]
+render_priority = 1
 transparency = 1
 depth_draw_mode = 1
 albedo_color = Color(0, 0, 0, 1)

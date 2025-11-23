@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b01axphphb3sk"]
+[gd_scene load_steps=18 format=3 uid="uid://b01axphphb3sk"]
 
 [ext_resource type="Script" uid="uid://b321veh5c3xks" path="res://enviroment/main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://buok0w254t0wh" path="res://player/player.tscn" id="1_ig7tw"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://cighyvs18l5tc" path="res://enviroment/enviroment.gd" id="3_272bh"]
 [ext_resource type="Environment" uid="uid://drbxgywq0qt61" path="res://enviroment/nightsky.tres" id="4_7mycd"]
 [ext_resource type="Script" uid="uid://imm8cpwki36x" path="res://enemies/enemy_manager.gd" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://srpjqh8ic1bs" path="res://enviroment/under_player.gd" id="7_wholn"]
+[ext_resource type="PackedScene" uid="uid://ce3v4apcvvt5l" path="res://enviroment/scene_change.tscn" id="8_iwxnw"]
 
 [sub_resource type="GDScript" id="GDScript_h2yge"]
 resource_name = "asd"
@@ -29,20 +31,44 @@ metadata/_preview_in_3d_space_ = true
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_h2yge"]
 width = 2000
 height = 2000
+in_3d_space = true
+generate_mipmaps = false
 seamless = true
 bump_strength = 1.5
 noise = SubResource("FastNoiseLite_0xm2m")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_iwxnw"]
+noise_type = 4
+fractal_type = 2
+fractal_octaves = 1
+fractal_gain = 1.0
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mnei3"]
+width = 2000
+height = 2000
+in_3d_space = true
+seamless = true
+bump_strength = 1.5
+noise = SubResource("FastNoiseLite_iwxnw")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h2yge"]
 render_priority = 0
 shader = ExtResource("2_0xm2m")
 shader_parameter/albedo = Color(0, 0.517647, 0.698039, 1)
 shader_parameter/metallic = 0.023
-shader_parameter/roughness = 0.595
+shader_parameter/roughness = 1.0
+shader_parameter/center_position = Vector2(0.5, 0.5)
 shader_parameter/fractal = SubResource("NoiseTexture2D_h2yge")
+shader_parameter/fractal_mipmaps = SubResource("NoiseTexture2D_mnei3")
+shader_parameter/paused = false
+shader_parameter/time_frame = 0.0
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_7mycd"]
 exposure_multiplier = 1.566
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wholn"]
+size = Vector3(5, 1, 5)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_1bvp3")
@@ -62,6 +88,7 @@ script = SubResource("GDScript_h2yge")
 script = ExtResource("3_272bh")
 
 [node name="Ocean" type="MeshInstance3D" parent="Enviroment"]
+unique_name_in_owner = true
 transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0.5)
 mesh = SubResource("PlaneMesh_0xm2m")
 skeleton = NodePath("../..")
@@ -109,9 +136,23 @@ transform = Transform3D(1, 0, 0, 0, 0.730162, 0.683274, 0, -0.683274, 0.730162, 
 
 [node name="EnemyManager" type="Node3D" parent="."]
 script = ExtResource("6_7mycd")
+max_chargers = 0
 
 [node name="Spawn" type="Timer" parent="."]
 wait_time = 10.0
 autostart = true
+
+[node name="UnderPlayer" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00938547, 5.65923)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("7_wholn")
+
+[node name="Collision" type="CollisionShape3D" parent="UnderPlayer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.490372, 0)
+shape = SubResource("BoxShape3D_wholn")
+debug_color = Color(0.505882, 0, 0.129412, 0.909804)
+
+[node name="SceneChange" parent="." instance=ExtResource("8_iwxnw")]
 
 [connection signal="timeout" from="Spawn" to="EnemyManager" method="_on_spawn_timeout"]

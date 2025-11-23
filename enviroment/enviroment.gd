@@ -12,6 +12,7 @@ const SUNSETSKY := preload("uid://cvu64fg4olqe")
 var enviroments : Array[Environment] = [DAYSKY,SUNSETSKY,NIGHTSKY]
 @onready var suns : Array[DirectionalLight3D] = [sun_day,sun_set,sun_night]
 
+
 var mode : int = 0:
 	set(new_mode):
 		mode = new_mode % 3

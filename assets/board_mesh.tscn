@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://dj2bnx6bntw6s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4sdjm"]
+transparency = 1
+depth_draw_mode = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_xdscm"]
+material = SubResource("StandardMaterial3D_4sdjm")
+size = Vector3(10, 1, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ptbjt"]
+transparency = 1
+depth_draw_mode = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_283wr"]
+material = SubResource("StandardMaterial3D_ptbjt")
+size = Vector3(10, 1, 3)
+
+[node name="BoardMesh" type="Node3D"]
+
+[node name="Voxel" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_xdscm")
+
+[node name="Voxel2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("BoxMesh_283wr")

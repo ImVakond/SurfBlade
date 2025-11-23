@@ -11,6 +11,7 @@ func _process(_delta : float) -> void:
 func _on_timer_timeout() -> void:
 	if is_processing():
 		emit_signal("time_exceeded")
+	call_deferred("queue_free")
 
 func _on_hook_area_body_entered(body : Node3D):
 	if body is not Player:

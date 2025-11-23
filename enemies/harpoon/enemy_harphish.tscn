@@ -32,7 +32,7 @@ radius = 0.697509
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rpg35"]
 depth_draw_mode = 1
-albedo_color = Color(1, 0.462745, 0.196078, 1)
+albedo_color = Color(1, 0.439216, 0.109804, 1)
 roughness = 0.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_4haie"]
@@ -54,8 +54,8 @@ roughness = 0.0
 material = SubResource("StandardMaterial3D_i6621")
 
 [node name="EnemyHarphish" type="CharacterBody3D"]
-collision_layer = 2
-collision_mask = 2
+collision_layer = 6
+collision_mask = 6
 script = ExtResource("1_t2eha")
 
 [node name="StateMachine" type="Node" parent="."]
@@ -107,9 +107,6 @@ draw_pass_1 = ExtResource("4_yfwn8")
 
 [node name="Collider" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_t2eha")
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 5.0
 
 [node name="Hookextension" type="CharacterBody3D" parent="."]
 collision_layer = 4

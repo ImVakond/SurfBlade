@@ -1,5 +1,11 @@
 extends State
 
+
+
+func enter(from : String, _data : Dictionary = {}) -> void:
+	if from != &"Hooked":
+		Global.spawn_text.emit(5,"Hooked")
+
 func update(_delta : float) -> void:
 	if !owner.active_hook:
 		change()
@@ -18,6 +24,6 @@ func change() -> void:
 	if owner.active_hook:
 		owner.active_hook.queue_free()
 	owner.active_hook = null
-	owner.velocity /= 2
+	owner.velocity = owner.velocity/2
 	switch(&"Onboard")
 	

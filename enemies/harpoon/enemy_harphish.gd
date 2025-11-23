@@ -15,8 +15,10 @@ func _process(_delta : float) -> void:
 func _on_hitbox_died() -> void:
 	died.emit(self)
 	state_machine._transition_to_next_state(&"Inactive")
-
+	Global.spawn_text.emit(10,"Harphish")
 func start():
 	if state_machine.state.name == &"Inactive":
+		await get_tree().create_timer(randf()*5).timeout
 		state_machine._transition_to_next_state(&"Ascend")
 		hitbox.health = hitbox.max_health
+	

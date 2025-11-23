@@ -13,13 +13,7 @@ func update() -> void:
 		else:
 			text += "\n"
 
-func _on_weapon_state_machine_switched(to_state : State) -> void:
-	var state_name : String = to_state.name
-	if state_name == "Attack":
-		controls["Q"] = ""
-	else:
-		controls["Q"] = "Discard " + state_name
-	controls["Left Click"] = state_name
+func _on_weapon_state_machine_switched(_to_state : State) -> void:
 	update()
 
 func change(data : Dictionary) -> void:
