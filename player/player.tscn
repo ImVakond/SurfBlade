@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://buok0w254t0wh"]
+[gd_scene load_steps=40 format=3 uid="uid://buok0w254t0wh"]
 
 [ext_resource type="Script" uid="uid://brssn1of78q8a" path="res://player/player.gd" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://dudbeybe481tr" path="res://general/gravity.gd" id="2_onrkg"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" uid="uid://bb7oye8qve2pw" path="res://general/hitbox.gd" id="12_ivps1"]
 [ext_resource type="Texture2D" uid="uid://bxl5c2h5b8820" path="res://ui/combo_empty.png" id="13_kb6p2"]
 [ext_resource type="Script" uid="uid://csxjwus1uujj7" path="res://player/score_text_manager.gd" id="14_wodsf"]
+[ext_resource type="PackedScene" uid="uid://ce3v4apcvvt5l" path="res://enviroment/scene_change.tscn" id="15_bjvpn"]
 [ext_resource type="PackedScene" uid="uid://dj2bnx6bntw6s" path="res://assets/board_mesh.tscn" id="16_32hag"]
 [ext_resource type="Texture2D" uid="uid://d1vm7j1ju3snq" path="res://ui/health_empty.png" id="16_c35mf"]
 [ext_resource type="Theme" uid="uid://dgm5n44gasdl0" path="res://ui/ui_theme.tres" id="19_x7c3f"]
@@ -96,6 +97,7 @@ script/source = "extends Button
 
 
 func _pressed() -> void:
+	await get_tree().create_timer(4,true,false,true).timeout
 	Global.points = 0
 	Global.is_ready = false
 	get_tree().paused = false
@@ -255,6 +257,9 @@ metadata/_custom_type_script = "uid://dudbeybe481tr"
 script = ExtResource("3_i3pqv")
 metadata/_custom_type_script = "uid://cbxtqhmhq4ogv"
 
+[node name="SceneChange" parent="." instance=ExtResource("15_bjvpn")]
+layer = 2
+
 [node name="UI" type="CanvasLayer" parent="."]
 process_mode = 3
 
@@ -387,6 +392,7 @@ one_shot = true
 [connection signal="area_entered" from="CameraHolder/AttackArea" to="." method="_on_attack_area_area_entered"]
 [connection signal="switched" from="WeaponStateMachine" to="CameraHolder/Weapons" method="_on_weapon_state_machine_switched"]
 [connection signal="switched" from="WeaponStateMachine" to="UI/ActiveUI/Controls" method="_on_weapon_state_machine_switched"]
+[connection signal="pressed" from="UI/RestartButton" to="SceneChange" method="exit"]
 [connection signal="timeout" from="UI/ActiveUI/ComboTimer" to="." method="_on_combo_timer_timeout"]
 [connection signal="died" from="Hitbox" to="." method="_on_hitbox_died"]
 [connection signal="took_damage" from="Hitbox" to="." method="_on_hitbox_took_damage"]

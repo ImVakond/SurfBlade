@@ -4,8 +4,9 @@ extends Node3D
 
 func _on_play_pressed():
 	await scene_change.exit()
+	var main_scene : PackedScene = load("uid://b01axphphb3sk")
 	await get_tree().create_timer(0.1).timeout
-	get_tree().change_scene_to_file("uid://b01axphphb3sk")
+	get_tree().change_scene_to_packed(main_scene)
 
 
 func _on_fov_check_box_toggled(toggled_on : bool) -> void:

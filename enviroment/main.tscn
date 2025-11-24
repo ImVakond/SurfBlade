@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://b01axphphb3sk"]
+[gd_scene load_steps=17 format=3 uid="uid://b01axphphb3sk"]
 
 [ext_resource type="Script" uid="uid://b321veh5c3xks" path="res://enviroment/main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://buok0w254t0wh" path="res://player/player.tscn" id="1_ig7tw"]
@@ -7,7 +7,6 @@
 [ext_resource type="Environment" uid="uid://drbxgywq0qt61" path="res://enviroment/nightsky.tres" id="4_7mycd"]
 [ext_resource type="Script" uid="uid://imm8cpwki36x" path="res://enemies/enemy_manager.gd" id="6_7mycd"]
 [ext_resource type="Script" uid="uid://srpjqh8ic1bs" path="res://enviroment/under_player.gd" id="7_wholn"]
-[ext_resource type="PackedScene" uid="uid://ce3v4apcvvt5l" path="res://enviroment/scene_change.tscn" id="8_iwxnw"]
 
 [sub_resource type="GDScript" id="GDScript_h2yge"]
 resource_name = "asd"
@@ -68,7 +67,7 @@ shader_parameter/time_frame = 0.0
 exposure_multiplier = 1.566
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wholn"]
-size = Vector3(5, 1, 5)
+size = Vector3(10, 1, 10)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_1bvp3")
@@ -153,7 +152,5 @@ script = ExtResource("7_wholn")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.490372, 0)
 shape = SubResource("BoxShape3D_wholn")
 debug_color = Color(0.505882, 0, 0.129412, 0.909804)
-
-[node name="SceneChange" parent="." instance=ExtResource("8_iwxnw")]
 
 [connection signal="timeout" from="Spawn" to="EnemyManager" method="_on_spawn_timeout"]

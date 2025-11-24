@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://3g6huurtmhmf" path="res://assets/game_logo_transparent.png" id="2_gpxqq"]
 
 [node name="SceneChange" type="CanvasLayer"]
+process_mode = 3
 script = ExtResource("1_vfg1q")
 
 [node name="Effect" type="ColorRect" parent="."]
