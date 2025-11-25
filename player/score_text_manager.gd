@@ -21,6 +21,7 @@ func _ready() -> void:
 		call_deferred("add_child",label)
 
 func spawn(amount : int, text : String) -> void:
+	if amount > 0.0: amount *= Global.combo_multiplier
 	Global.points += amount
 	
 	var label : Label = labels[idx]

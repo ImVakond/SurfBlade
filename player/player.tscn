@@ -16,7 +16,6 @@
 [ext_resource type="Script" uid="uid://brkrto575lmsh" path="res://ui/controls.gd" id="9_b26j0"]
 [ext_resource type="Script" uid="uid://do43f7ixqvpe" path="res://player/inactive.gd" id="12_65viv"]
 [ext_resource type="Script" uid="uid://bb7oye8qve2pw" path="res://general/hitbox.gd" id="12_ivps1"]
-[ext_resource type="Texture2D" uid="uid://bxl5c2h5b8820" path="res://ui/combo_empty.png" id="13_kb6p2"]
 [ext_resource type="Script" uid="uid://csxjwus1uujj7" path="res://player/score_text_manager.gd" id="14_wodsf"]
 [ext_resource type="PackedScene" uid="uid://ce3v4apcvvt5l" path="res://enviroment/scene_change.tscn" id="15_bjvpn"]
 [ext_resource type="PackedScene" uid="uid://dj2bnx6bntw6s" path="res://assets/board_mesh.tscn" id="16_32hag"]
@@ -121,6 +120,10 @@ func _process(_delta : float) -> void:
 
 [sub_resource type="LabelSettings" id="LabelSettings_i3pqv"]
 font_size = 64
+
+[sub_resource type="LabelSettings" id="LabelSettings_x7c3f"]
+font_size = 64
+font_color = Color(0.643137, 0.109804, 1, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_32hag"]
 font_size = 64
@@ -322,19 +325,48 @@ offset_bottom = 1075.0
 vertical_alignment = 1
 script = ExtResource("9_b26j0")
 
-[node name="ComboBar" type="TextureProgressBar" parent="UI/ActiveUI"]
+[node name="ComboBarBackground" type="TextureProgressBar" parent="UI/ActiveUI"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = -100.0
 offset_right = 1820.0
 offset_bottom = 1080.0
+rotation = -3.14101
 scale = Vector2(0.5, 0.5)
 pivot_offset = Vector2(960, 540)
-fill_mode = 3
-texture_under = ExtResource("13_kb6p2")
-texture_progress = ExtResource("13_kb6p2")
+max_value = 5.0
+fill_mode = 2
+texture_under = ExtResource("16_c35mf")
+texture_progress = ExtResource("16_c35mf")
+tint_under = Color(1, 1, 1, 0)
+tint_progress = Color(0.364262, 0.0012899, 0.584804, 1)
+
+[node name="ComboBarCounter" type="TextureProgressBar" parent="UI/ActiveUI"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -100.0
+offset_right = 1820.0
+offset_bottom = 1080.0
+rotation = -3.14101
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(960, 540)
+max_value = 50.0
+fill_mode = 2
+texture_under = ExtResource("16_c35mf")
+texture_progress = ExtResource("16_c35mf")
 tint_under = Color(1, 1, 1, 0)
 tint_progress = Color(0.643137, 0.109804, 1, 1)
+
+[node name="ComboText" type="Label" parent="UI/ActiveUI"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 445.0
+offset_top = 803.0
+offset_right = 485.0
+offset_bottom = 822.0
+text = "x1.8"
+label_settings = SubResource("LabelSettings_x7c3f")
+horizontal_alignment = 1
 
 [node name="HealthBar" type="TextureProgressBar" parent="UI/ActiveUI"]
 unique_name_in_owner = true
@@ -353,7 +385,8 @@ tint_progress = Color(1, 0, 0, 1)
 
 [node name="ComboTimer" type="Timer" parent="UI/ActiveUI"]
 unique_name_in_owner = true
-one_shot = true
+wait_time = 0.6
+autostart = true
 ignore_time_scale = true
 
 [node name="ScoreTextManager" type="Control" parent="UI/ActiveUI"]

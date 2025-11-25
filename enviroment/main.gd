@@ -16,7 +16,6 @@ func _process(_delta : float) -> void:
 	material.set_shader_parameter("center_position",ppos)
 
 # TODO:
-# - Combo
 # - Pufferfish enemy
 # - Waves
 # - SFX

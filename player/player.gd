@@ -19,7 +19,9 @@ const SPEED = 20.0
 @onready var camera : Camera3D= %Camera
 @onready var knockbackcd : Timer = %Knockbackcd
 @onready var motion_blur : Node = %motion_blur
-@onready var combo_bar : TextureProgressBar = %ComboBar
+@onready var combo_bar_background := %ComboBarBackground
+@onready var combo_bar_counter := %ComboBarCounter
+
 @onready var combo_timer : Timer = %ComboTimer
 @onready var headcast : RayCast3D = %HeadCast
 @onready var surf_board_holder : Node3D = %SurfBoardHolder
@@ -29,14 +31,13 @@ const SPEED = 20.0
 @onready var weapons : Node3D = %Weapons
 @onready var restart_button := %RestartButton
 @onready var active_ui := %ActiveUI
+@onready var combo_text := %ComboText
 
 var targeted_area : Area3D = null
 var active_hook : CharacterBody3D = null
 
 func _ready() -> void:
 	motion_blur.visible = Global.settings["MotionBlur"]
-	combo_timer.wait_time = Global.MAX_COMBO
-	combo_bar.max_value = Global.MAX_COMBO*10
 	
 func _physics_process(_delta : float) -> void:
 	health_bar.value = hitbox.health
@@ -46,7 +47,10 @@ func _physics_process(_delta : float) -> void:
 		targeted_area = null
 	if Global.settings["FovEffect"]:
 		camera.fov = clampf(70+velocity.length() / 2.0,70,140)
-	combo_bar.value = combo_timer.time_left * 10
+	combo_bar_counter.value = Global.combo*10
+	combo_bar_background.value = ceil(Global.combo)
+	combo_text.text = "x"+str(Global.combo_multiplier)
+	combo_text.visible = Global.combo > 0
 	Global.playerstate = movement_state_machine.state.name
 	
 func _on_attack_area_area_entered(area : Area3D) -> void:
@@ -58,14 +62,14 @@ func _on_attack_area_area_entered(area : Area3D) -> void:
 		knockbackcd.start()
 		if movement_state_machine.state.name == &"Hook":
 			movement_state_machine._transition_to_next_state(&"Onboardjump")
-		combo_timer.wait_time = min(combo_timer.time_left + Global.COMBO_RAISE,Global.MAX_COMBO)
+		Global.combo += Global.COMBO_RAISE
 		combo_timer.start()
 
 func is_on_floor_or_water() -> bool:
 	return is_on_floor() or global_position.y < 1.5
 
 func _on_combo_timer_timeout() -> void:
-	pass
+	Global.combo -= 0.1
 
 
 func _on_hitbox_took_damage() -> void:
