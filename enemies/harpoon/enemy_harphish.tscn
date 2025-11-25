@@ -1,14 +1,12 @@
-[gd_scene load_steps=23 format=3 uid="uid://g0uja46i3wmj"]
+[gd_scene load_steps=21 format=3 uid="uid://g0uja46i3wmj"]
 
 [ext_resource type="Script" uid="uid://bb7oye8qve2pw" path="res://general/hitbox.gd" id="1_ouwc6"]
 [ext_resource type="Script" uid="uid://b18isbj66e46b" path="res://enemies/harpoon/enemy_harphish.gd" id="1_t2eha"]
 [ext_resource type="PackedScene" uid="uid://dh4r1g6730v4m" path="res://enemies/healthbar.tscn" id="2_t2eha"]
 [ext_resource type="Script" uid="uid://ckhi5n4l5gx12" path="res://general/state_machine.gd" id="2_yfwn8"]
 [ext_resource type="Script" uid="uid://dh5eibqvx4hd0" path="res://enemies/ascend.gd" id="3_3bqhh"]
-[ext_resource type="Material" uid="uid://uau5jm8slqrd" path="res://enemies/damage_effect.tres" id="3_nu728"]
 [ext_resource type="Script" uid="uid://cte3u6i7bt7q" path="res://enemies/harpoon/harphish_up.gd" id="3_s6hh6"]
 [ext_resource type="Script" uid="uid://3e27hwwx48fj" path="res://enemies/harpoon/harphish_descend.gd" id="4_s6hh6"]
-[ext_resource type="BoxMesh" uid="uid://bf12t5tj44mei" path="res://enemies/damage_pass.tres" id="4_yfwn8"]
 [ext_resource type="Script" uid="uid://wnq3cutdkdr2" path="res://enemies/inactive.gd" id="6_rpg35"]
 [ext_resource type="PackedScene" uid="uid://c6epl5nbbij65" path="res://assets/hook_shooter.tscn" id="11_i6621"]
 
@@ -57,6 +55,7 @@ material = SubResource("StandardMaterial3D_3owem")
 collision_layer = 6
 collision_mask = 6
 script = ExtResource("1_t2eha")
+typename = "Harphish"
 
 [node name="StateMachine" type="Node" parent="."]
 unique_name_in_owner = true
@@ -79,12 +78,11 @@ metadata/_custom_type_script = "uid://eiklno1g3x35"
 script = ExtResource("4_s6hh6")
 metadata/_custom_type_script = "uid://eiklno1g3x35"
 
-[node name="Hitbox" type="Area3D" parent="." node_paths=PackedStringArray("Collider", "healthbar", "particles")]
+[node name="Hitbox" type="Area3D" parent="." node_paths=PackedStringArray("Collider", "healthbar")]
 unique_name_in_owner = true
 script = ExtResource("1_ouwc6")
 Collider = NodePath("HitboxCol")
 healthbar = NodePath("HealthBar")
-particles = NodePath("Particles")
 max_health = 1.0
 
 [node name="HitboxCol" type="CollisionShape3D" parent="Hitbox"]
@@ -94,16 +92,6 @@ shape = SubResource("CapsuleShape3D_s6hh6")
 transform = Transform3D(2.87319, 0, 0, 0, 0.0541109, 0, 0, 0, 0.45289, 0, 1.38924, 0)
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_3bqhh")
-
-[node name="Particles" type="GPUParticles3D" parent="Hitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0695744, 0)
-emitting = false
-amount = 40
-lifetime = 2.0
-one_shot = true
-explosiveness = 1.0
-process_material = ExtResource("3_nu728")
-draw_pass_1 = ExtResource("4_yfwn8")
 
 [node name="Collider" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_t2eha")

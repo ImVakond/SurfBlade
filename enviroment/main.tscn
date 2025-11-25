@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b01axphphb3sk"]
+[gd_scene load_steps=18 format=3 uid="uid://b01axphphb3sk"]
 
 [ext_resource type="Script" uid="uid://b321veh5c3xks" path="res://enviroment/main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://buok0w254t0wh" path="res://player/player.tscn" id="1_ig7tw"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://cighyvs18l5tc" path="res://enviroment/enviroment.gd" id="3_272bh"]
 [ext_resource type="Environment" uid="uid://drbxgywq0qt61" path="res://enviroment/nightsky.tres" id="4_7mycd"]
 [ext_resource type="Script" uid="uid://imm8cpwki36x" path="res://enemies/enemy_manager.gd" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://7uaew4c5agmf" path="res://enemies/blood_manager.gd" id="7_iwxnw"]
 [ext_resource type="Script" uid="uid://srpjqh8ic1bs" path="res://enviroment/under_player.gd" id="7_wholn"]
 
 [sub_resource type="GDScript" id="GDScript_h2yge"]
@@ -135,8 +136,11 @@ transform = Transform3D(1, 0, 0, 0, 0.730162, 0.683274, 0, -0.683274, 0.730162, 
 
 [node name="EnemyManager" type="Node3D" parent="."]
 script = ExtResource("6_7mycd")
-max_fishes = 5
+max_fishes = 50
 max_chargers = 5
+
+[node name="BloodManager" type="Node3D" parent="."]
+script = ExtResource("7_iwxnw")
 
 [node name="Spawn" type="Timer" parent="."]
 wait_time = 10.0

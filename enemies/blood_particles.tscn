@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cayntkbhp2ncw"]
+
+[ext_resource type="Material" uid="uid://uau5jm8slqrd" path="res://enemies/damage_effect.tres" id="1_j8ofi"]
+[ext_resource type="BoxMesh" uid="uid://bf12t5tj44mei" path="res://enemies/damage_pass.tres" id="2_03vyc"]
+
+[node name="Particles" type="GPUParticles3D"]
+emitting = false
+amount = 80
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+process_material = ExtResource("1_j8ofi")
+draw_pass_1 = ExtResource("2_03vyc")

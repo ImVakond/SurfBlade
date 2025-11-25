@@ -83,10 +83,12 @@ func _on_hitbox_died() -> void:
 
 	var tween : Tween = get_tree().create_tween()
 	#tween.tween_property(Engine,"time_scale",0,1).set_trans(Tween.TRANS_EXPO)
-	tween.parallel().tween_property(damage_effect,"modulate",Color.WHITE,1).set_trans(Tween.TRANS_EXPO)
+	tween.parallel().tween_property(damage_effect,"modulate",Color.WHITE,0.5).set_trans(Tween.TRANS_EXPO)
 	tween.parallel().tween_property(restart_button,"position:y",800,1).set_trans(Tween.TRANS_EXPO)
 	await tween.finished
 	tween.kill()
 	Engine.time_scale = 0
 	get_tree().paused = true
+	damage_effect.modulate = Color.WHITE
 	active_ui.visible = false
+	

@@ -8,10 +8,8 @@ const HARPHISH_BULLET = preload("uid://djsy4i2ta2uo2")
 const ITEM := preload("uid://bmywilibhhjqb")
 
 var enemies1 : Array[CharacterBody3D]
-var enemycounter1 : int = 0
 
 var enemies2 : Array[CharacterBody3D]
-var enemycounter2 : int = 0
 
 @export var max_fishes : int = 10
 @export var max_chargers : int = 3
@@ -21,6 +19,7 @@ func _ready() -> void:
 		await get_tree().create_timer(0.05).timeout
 		var enemy = ENEMY_HARPHISH.instantiate()
 		add_child(enemy)
+		enemy.visible = false
 		enemy.position = Vector3(0,-50,0)
 		enemies1.append(enemy)
 		enemy.connect("died",enemy_died)
@@ -29,10 +28,12 @@ func _ready() -> void:
 		await get_tree().create_timer(0.05).timeout
 		var enemy = ENEMY_CHARGER.instantiate()
 		add_child(enemy)
+		enemy.visible = false
 		enemy.position = Vector3(0,-50,0)
 		enemies2.append(enemy)
 		enemy.connect("died",enemy_died)
 	_on_spawn_timeout()
+
 func spawn_item_at(pos : Vector3):
 	var item : RigidBody3D = ITEM.instantiate()
 	await call_deferred("add_sibling",item)
@@ -50,21 +51,20 @@ func enemy_died(enemy : Node3D) -> void:
 	if enemy is Harphish:
 		spawn_item_at(enemy.position)
 	enemy.global_position = Vector3(0,-50,0)
-
+	enemy.visible = false
 
 func spawn_harpoon() -> void:
-	if !max_fishes:
-		return
-	enemies1[enemycounter1 % max_fishes].start()
-	enemycounter1 += 1
-
+	for idx : int in range(max_fishes):
+		if enemies1[idx].can_start():
+			enemies1[idx].start()
+			return
 func spawn_charger():
-	if !max_chargers:
-		return
-	enemies2[enemycounter2 % max_chargers].start()
-	enemycounter2 += 1
+	for idx : int in range(max_chargers):
+		if enemies2[idx].can_start():
+			enemies2[idx].start()
+			return
 
 func _on_spawn_timeout() -> void:
-	for i in range(10):
+	for _i in range(10):
 		spawn_harpoon()
 	spawn_charger()

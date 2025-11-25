@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://buok0w254t0wh"]
+[gd_scene load_steps=44 format=3 uid="uid://buok0w254t0wh"]
 
 [ext_resource type="Script" uid="uid://brssn1of78q8a" path="res://player/player.gd" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://dudbeybe481tr" path="res://general/gravity.gd" id="2_onrkg"]
@@ -99,6 +99,7 @@ func _pressed() -> void:
 	await get_tree().create_timer(4,true,false,true).timeout
 	Global.points = 0
 	Global.is_ready = false
+	Global.combo = 0
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 "
@@ -116,6 +117,51 @@ var displayed : float = 0.0
 func _process(_delta : float) -> void:
 	displayed = move_toward(displayed,Global.points,0.4)
 	text = \"Score: \\n\" + str(int(displayed))
+"
+
+[sub_resource type="Animation" id="Animation_x7c3f"]
+resource_name = "damageflash"
+length = 0.3
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%DamageEffect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_bjvpn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%DamageEffect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s7qer"]
+_data = {
+&"RESET": SubResource("Animation_bjvpn"),
+&"damageflash": SubResource("Animation_x7c3f")
+}
+
+[sub_resource type="GDScript" id="GDScript_x7c3f"]
+script/source = "extends AnimationPlayer
+
+func damage_effect() -> void:
+	play(\"damageflash\")
 "
 
 [sub_resource type="LabelSettings" id="LabelSettings_i3pqv"]
@@ -301,6 +347,13 @@ offset_bottom = 1111.0
 mouse_filter = 2
 color = Color(1, 0.0117647, 0, 0.392157)
 
+[node name="DamageFlash" type="AnimationPlayer" parent="UI/DamageEffect"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_s7qer")
+}
+script = SubResource("GDScript_x7c3f")
+
 [node name="ActiveUI" type="Control" parent="UI"]
 unique_name_in_owner = true
 layout_mode = 3
@@ -429,3 +482,4 @@ one_shot = true
 [connection signal="timeout" from="UI/ActiveUI/ComboTimer" to="." method="_on_combo_timer_timeout"]
 [connection signal="died" from="Hitbox" to="." method="_on_hitbox_died"]
 [connection signal="took_damage" from="Hitbox" to="." method="_on_hitbox_took_damage"]
+[connection signal="took_damage" from="Hitbox" to="UI/DamageEffect/DamageFlash" method="damage_effect"]
