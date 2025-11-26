@@ -55,6 +55,7 @@ noise = SubResource("FastNoiseLite_iwxnw")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h2yge"]
 render_priority = 0
 shader = ExtResource("2_0xm2m")
+shader_parameter/resolution = 12500.0
 shader_parameter/albedo = Color(0, 0.517647, 0.698039, 1)
 shader_parameter/metallic = 0.023
 shader_parameter/roughness = 1.0
@@ -138,6 +139,7 @@ transform = Transform3D(1, 0, 0, 0, 0.730162, 0.683274, 0, -0.683274, 0.730162, 
 script = ExtResource("6_7mycd")
 max_fishes = 50
 max_chargers = 5
+max_puffers = 1
 
 [node name="BloodManager" type="Node3D" parent="."]
 script = ExtResource("7_iwxnw")

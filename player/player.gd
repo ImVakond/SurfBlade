@@ -21,7 +21,6 @@ const SPEED = 20.0
 @onready var motion_blur : Node = %motion_blur
 @onready var combo_bar_background := %ComboBarBackground
 @onready var combo_bar_counter := %ComboBarCounter
-
 @onready var combo_timer : Timer = %ComboTimer
 @onready var headcast : RayCast3D = %HeadCast
 @onready var surf_board_holder : Node3D = %SurfBoardHolder
@@ -32,6 +31,7 @@ const SPEED = 20.0
 @onready var restart_button := %RestartButton
 @onready var active_ui := %ActiveUI
 @onready var combo_text := %ComboText
+@onready var invincibility : Timer = %Invincibility
 
 var targeted_area : Area3D = null
 var active_hook : CharacterBody3D = null
@@ -52,7 +52,7 @@ func _physics_process(_delta : float) -> void:
 	combo_text.text = "x"+str(Global.combo_multiplier)
 	combo_text.visible = Global.combo > 0
 	Global.playerstate = movement_state_machine.state.name
-	
+	hitbox.invincible = !invincibility.is_stopped()
 func _on_attack_area_area_entered(area : Area3D) -> void:
 	if area is Hitbox and area.enemy and knockbackcd.is_stopped():
 		var pitch = cameraholder.global_rotation.x
@@ -92,3 +92,5 @@ func _on_hitbox_died() -> void:
 	damage_effect.modulate = Color.WHITE
 	active_ui.visible = false
 	
+func _on_hitbox_knockback(from : Vector3) -> void:
+	velocity = (global_position - from).normalized() * Vector3(50,0,50) + Vector3(0,velocity.y,0)

@@ -7,6 +7,7 @@ func enter(from : String, _data : Dictionary = {}) -> void:
 		Global.add_score.emit(5,"Hooked")
 
 func update(_delta : float) -> void:
+	owner.invincibility.start()
 	if !owner.active_hook:
 		change()
 		return

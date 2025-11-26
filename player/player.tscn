@@ -119,6 +119,21 @@ func _process(_delta : float) -> void:
 	text = \"Score: \\n\" + str(int(displayed))
 "
 
+[sub_resource type="Animation" id="Animation_bjvpn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%DamageEffect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_x7c3f"]
 resource_name = "damageflash"
 length = 0.3
@@ -134,21 +149,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_bjvpn"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("%DamageEffect:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_s7qer"]
@@ -438,7 +438,7 @@ tint_progress = Color(1, 0, 0, 1)
 
 [node name="ComboTimer" type="Timer" parent="UI/ActiveUI"]
 unique_name_in_owner = true
-wait_time = 0.6
+wait_time = 0.4
 autostart = true
 ignore_time_scale = true
 
@@ -456,7 +456,8 @@ one_shot = true
 unique_name_in_owner = true
 script = ExtResource("12_ivps1")
 Collider = NodePath("CollisionShape3D")
-inv_frames = NodePath("../InvFrame")
+inv_frames = NodePath("../Invincibility")
+max_health = 50.0
 enemy = false
 metadata/_custom_type_script = "uid://bb7oye8qve2pw"
 
@@ -471,8 +472,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 [node name="BoardMesh" parent="SurfBoardHolder" instance=ExtResource("16_32hag")]
 transform = Transform3D(-4.37114e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.37114e-09, 0, -0.6, 0)
 
-[node name="InvFrame" type="Timer" parent="."]
-wait_time = 0.5
+[node name="Invincibility" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.3
 one_shot = true
 
 [connection signal="area_entered" from="CameraHolder/AttackArea" to="." method="_on_attack_area_area_entered"]
@@ -481,5 +483,6 @@ one_shot = true
 [connection signal="pressed" from="UI/RestartButton" to="SceneChange" method="exit"]
 [connection signal="timeout" from="UI/ActiveUI/ComboTimer" to="." method="_on_combo_timer_timeout"]
 [connection signal="died" from="Hitbox" to="." method="_on_hitbox_died"]
+[connection signal="knockback" from="Hitbox" to="." method="_on_hitbox_knockback"]
 [connection signal="took_damage" from="Hitbox" to="." method="_on_hitbox_took_damage"]
 [connection signal="took_damage" from="Hitbox" to="UI/DamageEffect/DamageFlash" method="damage_effect"]

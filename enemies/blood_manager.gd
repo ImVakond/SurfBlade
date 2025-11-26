@@ -11,6 +11,8 @@ func _ready() -> void:
 		var blood = BLOOD_PARTICLES.instantiate()
 		bloods.append(blood)
 		call_deferred("add_child",blood)
+		blood.set_deferred("position:y",-5)
+		blood.set_deferred("emitting",true)
 
 func spawn(pos : Vector3) -> void:
 	var blood = bloods[idx]

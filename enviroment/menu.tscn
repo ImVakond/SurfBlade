@@ -37,6 +37,7 @@ noise = SubResource("FastNoiseLite_ecwwl")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kk3ma"]
 render_priority = 0
 shader = ExtResource("2_4hy44")
+shader_parameter/resolution = 12000.0
 shader_parameter/albedo = Color(0, 0.517647, 0.698039, 1)
 shader_parameter/metallic = 0.023
 shader_parameter/roughness = 0.595

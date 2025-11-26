@@ -1,0 +1,147 @@
+[gd_scene load_steps=21 format=3 uid="uid://dalategwnh1un"]
+
+[ext_resource type="Script" uid="uid://cr08guarde3j7" path="res://enemies/puffer/enemy_puffer.gd" id="1_r3mny"]
+[ext_resource type="Script" uid="uid://ckhi5n4l5gx12" path="res://general/state_machine.gd" id="2_qhl5w"]
+[ext_resource type="Script" uid="uid://wnq3cutdkdr2" path="res://enemies/inactive.gd" id="3_83tat"]
+[ext_resource type="Script" uid="uid://c5r7koums48mm" path="res://enemies/puffer/ascend.gd" id="4_qhl5w"]
+[ext_resource type="Script" uid="uid://johw0twuykor" path="res://enemies/puffer/up.gd" id="5_83tat"]
+[ext_resource type="Script" uid="uid://bb7oye8qve2pw" path="res://general/hitbox.gd" id="5_ivucn"]
+[ext_resource type="PackedScene" uid="uid://dh4r1g6730v4m" path="res://enemies/healthbar.tscn" id="6_qf6cw"]
+[ext_resource type="Script" uid="uid://cbxtqhmhq4ogv" path="res://general/move_and_slide.gd" id="8_83tat"]
+[ext_resource type="Script" uid="uid://dudbeybe481tr" path="res://general/gravity.gd" id="9_q2pwx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qhl5w"]
+size = Vector3(5, 5, 5)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_272bh"]
+viewport_path = NodePath("ProgressBarViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k4m7e"]
+resource_local_to_scene = true
+transparency = 1
+blend_mode = 4
+shading_mode = 0
+albedo_color = Color(1, 1, 1, 0.14902)
+albedo_texture = SubResource("ViewportTexture_272bh")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qhl5w"]
+radius = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qhl5w"]
+depth_draw_mode = 1
+albedo_color = Color(0.835294, 0.662745, 0.27451, 1)
+roughness = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_83tat"]
+material = SubResource("StandardMaterial3D_qhl5w")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tdo3o"]
+depth_draw_mode = 1
+roughness = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_73gva"]
+material = SubResource("StandardMaterial3D_tdo3o")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3owem"]
+depth_draw_mode = 1
+albedo_color = Color(0, 0, 0, 1)
+roughness = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_f3d0y"]
+material = SubResource("StandardMaterial3D_3owem")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_83tat"]
+size = Vector3(0.9, 0.9, 0.9)
+
+[node name="Puffer" type="CharacterBody3D"]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_r3mny")
+typename = "Puffer"
+metadata/_custom_type_script = "uid://7dsrb2uxw7aw"
+
+[node name="StateMachine" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_qhl5w")
+metadata/_custom_type_script = "uid://ckhi5n4l5gx12"
+
+[node name="Inactive" type="Node" parent="StateMachine"]
+script = ExtResource("3_83tat")
+metadata/_custom_type_script = "uid://eiklno1g3x35"
+
+[node name="Ascend" type="Node" parent="StateMachine"]
+script = ExtResource("4_qhl5w")
+metadata/_custom_type_script = "uid://eiklno1g3x35"
+
+[node name="Up" type="Node" parent="StateMachine"]
+script = ExtResource("5_83tat")
+metadata/_custom_type_script = "uid://eiklno1g3x35"
+
+[node name="Hitbox" type="Area3D" parent="." node_paths=PackedStringArray("Collider", "healthbar")]
+unique_name_in_owner = true
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.558513, 0)
+script = ExtResource("5_ivucn")
+Collider = NodePath("HitboxCol")
+healthbar = NodePath("HealthBar")
+health_bar_visible = true
+
+[node name="HitboxCol" type="CollisionShape3D" parent="Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2, 0)
+shape = SubResource("BoxShape3D_qhl5w")
+
+[node name="HealthBar" parent="Hitbox" instance=ExtResource("6_qf6cw")]
+transform = Transform3D(2.87319, 0, 0, 0, 0.0541109, 0, 0, 0, 0.45289, 0, 0.575189, 0)
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_k4m7e")
+
+[node name="Collider" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_qhl5w")
+
+[node name="Mesh" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Body" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
+mesh = SubResource("BoxMesh_83tat")
+
+[node name="Body2" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(0.8, 0, 0, 0, 1, 0, 0, 0, 0.8, 0, 0, 0)
+mesh = SubResource("BoxMesh_83tat")
+
+[node name="Body3" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_83tat")
+
+[node name="Eye" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.421232, 0.237286, -0.214415)
+mesh = SubResource("BoxMesh_73gva")
+
+[node name="Eyeball" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.514695, 0.237286, -0.214415)
+mesh = SubResource("BoxMesh_f3d0y")
+
+[node name="Eyeball2" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.514695, 0.237286, 0.192381)
+mesh = SubResource("BoxMesh_f3d0y")
+
+[node name="Eye2" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.421232, 0.237286, 0.197795)
+mesh = SubResource("BoxMesh_73gva")
+
+[node name="Hurtbox" type="Area3D" parent="." groups=["Big", "EnemyDamage"]]
+
+[node name="Hurtcollision" type="CollisionShape3D" parent="Hurtbox"]
+shape = SubResource("BoxShape3D_83tat")
+
+[node name="MoveAndSlide" type="Node" parent="."]
+script = ExtResource("8_83tat")
+metadata/_custom_type_script = "uid://cbxtqhmhq4ogv"
+
+[node name="Gravity" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("9_q2pwx")
+enabled = false
+metadata/_custom_type_script = "uid://dudbeybe481tr"
+
+[connection signal="died" from="Hitbox" to="." method="_on_hitbox_died"]

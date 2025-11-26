@@ -8,9 +8,12 @@ class_name Hitbox
 @export var particles : bool = true
 @export var max_health = 5.0
 @export var enemy : bool = true
+@export var invincible : bool = false
+@export var health_bar_visible : bool = false
 
 signal died
 signal took_damage
+signal knockback(from : Vector3)
 
 var health = 1.0:
 	set(value):
@@ -31,10 +34,14 @@ var health = 1.0:
 func _ready() -> void:
 	area_entered.connect(on_area_entered)
 	health = max_health
-	visible = false
+	if !health_bar_visible:
+		visible = false
 func on_area_entered(area : Area3D) -> void:
+	if invincible:
+		return
 	if area.is_in_group("PlayerDamage") and enemy:
 		health -= 1
-
 	elif area.is_in_group("EnemyDamage") and not enemy:
 		health -= 1
+		if area.is_in_group("Big"):
+			knockback.emit(area.global_position)

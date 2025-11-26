@@ -1,6 +1,6 @@
 shader_type spatial;
 
-
+uniform float resolution = 12000.0;
 uniform vec3 albedo : source_color;
 uniform float metallic : hint_range(0.0, 1.0) = 0.0;
 uniform float roughness : hint_range(0.0, 1.0) = 0.02;
@@ -12,7 +12,7 @@ uniform float time_frame;
 varying float time;
 
 vec2 round_UV(vec2 uv){
-	return round(uv*25000.0)/25000.0;
+	return round(uv*resolution)/resolution;
 }
 
 void fragment(){

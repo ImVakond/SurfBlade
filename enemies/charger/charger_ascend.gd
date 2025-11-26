@@ -10,4 +10,3 @@ func update(delta: float) -> void:
 	if owner.position.y > 0:
 		owner.rotation.y = owner.looker_node.rotation.y
 		switch(&"Walk")
-		
