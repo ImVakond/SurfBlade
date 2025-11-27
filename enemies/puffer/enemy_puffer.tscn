@@ -59,6 +59,7 @@ collision_layer = 4
 collision_mask = 4
 script = ExtResource("1_r3mny")
 typename = "Puffer"
+reward = 40
 metadata/_custom_type_script = "uid://7dsrb2uxw7aw"
 
 [node name="StateMachine" type="Node" parent="."]
@@ -99,6 +100,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_k4m7e")
 shape = SubResource("SphereShape3D_qhl5w")
 
 [node name="Mesh" type="Node3D" parent="."]
+unique_name_in_owner = true
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="Body" type="MeshInstance3D" parent="Mesh"]
@@ -141,7 +143,6 @@ metadata/_custom_type_script = "uid://cbxtqhmhq4ogv"
 [node name="Gravity" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("9_q2pwx")
-enabled = false
 metadata/_custom_type_script = "uid://dudbeybe481tr"
 
 [connection signal="died" from="Hitbox" to="." method="_on_hitbox_died"]

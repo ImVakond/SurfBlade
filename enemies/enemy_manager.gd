@@ -60,7 +60,7 @@ func spawn(type : int) -> void:
 			return
 
 func _on_spawn_timeout() -> void:
-	for _i in range(10):
-		spawn(ENEMIES.HARPHISH)
-	spawn(ENEMIES.CHARGER)
+	#for _i in range(10):
+	#	spawn(ENEMIES.HARPHISH)
+	#spawn(ENEMIES.CHARGER)
 	spawn(ENEMIES.PUFFER) 

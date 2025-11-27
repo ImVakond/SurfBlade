@@ -7,6 +7,7 @@ signal died(enemy : Enemy)
 @onready var state_machine : StateMachine = %StateMachine
 
 @export var typename : String = ""
+@export var reward : int = 10
 
 func can_start() -> bool:
 	return state_machine.state.name == &"Inactive"
@@ -20,4 +21,4 @@ func start():
 func _on_hitbox_died() -> void:
 	died.emit(self)
 	state_machine._transition_to_next_state(&"Inactive")
-	Global.add_score.emit(10,typename.capitalize())
+	Global.add_score.emit(reward,typename.capitalize())
