@@ -32,15 +32,19 @@ const SPEED = 20.0
 @onready var active_ui := %ActiveUI
 @onready var combo_text := %ComboText
 @onready var invincibility : Timer = %Invincibility
+@onready var wave_animation : AnimationPlayer = %WaveAnimation
+@onready var wave_label : Label = %WaveLabel
+@onready var healeffect = %HealEffect
 
 var targeted_area : Area3D = null
 var active_hook : CharacterBody3D = null
 
 func _ready() -> void:
 	motion_blur.visible = Global.settings["MotionBlur"]
+	await get_tree().create_timer(0.1).timeout
+	tween_health()
 	
 func _physics_process(_delta : float) -> void:
-	health_bar.value = hitbox.health
 	if targeter.is_colliding():
 		targeted_area = targeter.get_collider()
 	else:
@@ -71,9 +75,20 @@ func is_on_floor_or_water() -> bool:
 func _on_combo_timer_timeout() -> void:
 	Global.combo -= 0.1
 
+func heal() -> void:
+	Global.add_score.emit(5,"Healed")
+	healeffect.emitting = true
+	hitbox.health += 1
+	tween_health()
 
 func _on_hitbox_took_damage() -> void:
 	Global.add_score.emit(-5,"Hit")
+	Global.combo -= 0.5
+	tween_health()
+
+func tween_health() -> void:
+	var tween : Tween = get_tree().create_tween()
+	tween.tween_property(health_bar,"value",hitbox.health*10,0.5)
 
 
 func _on_hitbox_died() -> void:
@@ -94,3 +109,10 @@ func _on_hitbox_died() -> void:
 	
 func _on_hitbox_knockback(from : Vector3) -> void:
 	velocity = (global_position - from).normalized() * Vector3(50,0,50) + Vector3(0,velocity.y,0)
+
+func wave_changed(to : int) -> void:
+	wave_animation.play("change_wave")
+	await wave_animation.animation_finished
+	await get_tree().create_timer(0.5).timeout
+	wave_label.text = "Wave " + str(to+1)
+	wave_animation.play("leave")

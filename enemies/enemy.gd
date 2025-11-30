@@ -18,6 +18,8 @@ func start():
 		state_machine._transition_to_next_state(&"Ascend")
 		hitbox.health = hitbox.max_health
 
+
+
 func _on_hitbox_died() -> void:
 	died.emit(self)
 	state_machine._transition_to_next_state(&"Inactive")

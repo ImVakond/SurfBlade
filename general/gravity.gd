@@ -2,7 +2,7 @@ extends Node
 class_name Gravity
 
 @onready var parent : CharacterBody3D = get_parent()
-@export var enabled : int = true:
+@export var enabled : bool = true:
 	set(value):
 		enabled = value
 		set_physics_process(enabled)

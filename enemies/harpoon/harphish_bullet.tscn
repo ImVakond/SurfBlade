@@ -31,9 +31,9 @@ shape = SubResource("BoxShape3D_pm3a3")
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 
 [node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
 wait_time = 5.0
-autostart = true
-ignore_time_scale = true
+one_shot = true
 
 [connection signal="area_entered" from="HarphishBulletArea" to="." method="_on_harphish_bullet_area_area_entered"]
 [connection signal="body_entered" from="HarphishBulletArea" to="." method="_on_hook_area_body_entered"]

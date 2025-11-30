@@ -3,12 +3,12 @@ extends Node3D
 @onready var scene_change := %SceneChange
 
 func _on_play_pressed():
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	await scene_change.exit()
 	var main_scene : PackedScene = load("uid://b01axphphb3sk")
 	await get_tree().create_timer(0.1).timeout
 	if main_scene:
 		get_tree().change_scene_to_packed(main_scene)
-
 
 func _on_fov_check_box_toggled(toggled_on : bool) -> void:
 	Global.settings["FovEffect"] = toggled_on

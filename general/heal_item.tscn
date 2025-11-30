@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://cmjhrd1wgh3yy"]
+
+[ext_resource type="Script" uid="uid://b8j3eh2jh2q0i" path="res://general/heal_item.gd" id="1_gvm41"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qm1h8"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_nwlam"]
+radius = 1.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_gvm41"]
+size = Vector3(0.1, 0.1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pxhkc"]
+albedo_color = Color(0.116082, 0.376379, 0.1173, 1)
+
+[node name="HealItem" type="RigidBody3D"]
+script = ExtResource("1_gvm41")
+
+[node name="Collider" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_qm1h8")
+
+[node name="Label" type="Label3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.971344, 0)
+billboard = 1
+no_depth_test = true
+fixed_size = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 1
+modulate = Color(1, 1, 0, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "E to pick up"
+font_size = 16
+outline_size = 1
+
+[node name="ItemArea" type="Area3D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ItemArea"]
+shape = SubResource("SphereShape3D_nwlam")
+
+[node name="InputStorage" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.1
+one_shot = true
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+mesh = SubResource("BoxMesh_gvm41")
+surface_material_override/0 = SubResource("StandardMaterial3D_pxhkc")
+
+[node name="Mesh2" type="MeshInstance3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, -0.0261796, 2.99989, 0, -2.99989, -0.0261796, 0, 0, 0)
+mesh = SubResource("BoxMesh_gvm41")
+surface_material_override/0 = SubResource("StandardMaterial3D_pxhkc")

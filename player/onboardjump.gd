@@ -5,8 +5,8 @@ var changed : float = 0
 
 func enter(_from : String, _data : Dictionary = {}) -> void:
 	owner.controllabel.change({
-		"W" : "Speed Up",
-		"S" : "Slow Down",
+		"W" : "Forward",
+		"S" : "Backward",
 		"A" : "Left",
 		"D" : "Right",
 		"Space" : ""

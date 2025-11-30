@@ -1,10 +1,15 @@
 extends Node
 
+enum ITEMS{
+	HARPOON,
+	HEAL
+}
 const MAX_COMBO : float = 5.0
 const COMBO_RAISE : float = 0.5
 
 signal add_score(amount : int, text : String)
 signal spawn_blood(position : Vector3)
+signal spawn_item(type : int,pos : Vector3)
 
 var is_ready : bool = false
 var main : Node3D
@@ -25,5 +30,5 @@ var playerstate : String
 var settings : Dictionary = {
 	"MotionBlur" : true,
 	"FovEffect" : true,
-	"Time" : 2
+	"Time" : 0
 }

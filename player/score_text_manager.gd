@@ -3,7 +3,6 @@ extends Control
 @export var label_settings : LabelSettings
 
 var labels : Array[Label]
-var tweens : Array[Tween]
 
 var idx : int = 0
 var format_pos : String = "+%d %s"
@@ -27,7 +26,7 @@ func spawn(amount : int, text : String) -> void:
 	var label : Label = labels[idx]
 	label.modulate = Color.WHITE
 	label.position = Vector2(randi_range(MARGINS,get_viewport().size.x-MARGINS),randi_range(MARGINS,get_viewport().size.y-MARGINS))
-	
+
 	if amount < 0:label.text = format_neg % [amount,text]
 	else:label.text = format_pos % [amount,text]
 	

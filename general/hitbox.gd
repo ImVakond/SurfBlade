@@ -4,7 +4,6 @@ class_name Hitbox
 @export var Collider : CollisionShape3D
 @export var healthbar : MeshInstance3D
 @export var inv_frames : Timer
-
 @export var particles : bool = true
 @export var max_health = 5.0
 @export var enemy : bool = true
@@ -21,6 +20,7 @@ var health = 1.0:
 			if health > value:
 				if particles:
 					Global.spawn_blood.emit(global_position)
+				health = min(value,max_health)
 				took_damage.emit()
 			if healthbar:
 				healthbar.set_health(value,max_health)
@@ -28,14 +28,14 @@ var health = 1.0:
 				inv_frames.start()
 			if value <= 0:
 				died.emit()
-			health = value
+			health = min(value,max_health)
 
 
 func _ready() -> void:
 	area_entered.connect(on_area_entered)
 	health = max_health
-	if !health_bar_visible:
-		visible = false
+	#if !health_bar_visible:
+	#	visible = false
 func on_area_entered(area : Area3D) -> void:
 	if invincible:
 		return

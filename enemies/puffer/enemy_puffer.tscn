@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dalategwnh1un"]
+[gd_scene load_steps=22 format=3 uid="uid://dalategwnh1un"]
 
 [ext_resource type="Script" uid="uid://cr08guarde3j7" path="res://enemies/puffer/enemy_puffer.gd" id="1_r3mny"]
 [ext_resource type="Script" uid="uid://ckhi5n4l5gx12" path="res://general/state_machine.gd" id="2_qhl5w"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://bb7oye8qve2pw" path="res://general/hitbox.gd" id="5_ivucn"]
 [ext_resource type="PackedScene" uid="uid://dh4r1g6730v4m" path="res://enemies/healthbar.tscn" id="6_qf6cw"]
 [ext_resource type="Script" uid="uid://cbxtqhmhq4ogv" path="res://general/move_and_slide.gd" id="8_83tat"]
+[ext_resource type="Script" uid="uid://b7skc0e1su4pm" path="res://enemies/puffer/hurtbox.gd" id="8_ivucn"]
 [ext_resource type="Script" uid="uid://dudbeybe481tr" path="res://general/gravity.gd" id="9_q2pwx"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qhl5w"]
@@ -56,7 +57,7 @@ size = Vector3(0.9, 0.9, 0.9)
 [node name="Puffer" type="CharacterBody3D"]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 collision_layer = 4
-collision_mask = 4
+collision_mask = 0
 script = ExtResource("1_r3mny")
 typename = "Puffer"
 reward = 40
@@ -132,9 +133,14 @@ transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.421232, 0.237286, 0.1
 mesh = SubResource("BoxMesh_73gva")
 
 [node name="Hurtbox" type="Area3D" parent="." groups=["Big", "EnemyDamage"]]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("8_ivucn")
 
 [node name="Hurtcollision" type="CollisionShape3D" parent="Hurtbox"]
+unique_name_in_owner = true
 shape = SubResource("BoxShape3D_83tat")
+disabled = true
 
 [node name="MoveAndSlide" type="Node" parent="."]
 script = ExtResource("8_83tat")
@@ -146,3 +152,6 @@ script = ExtResource("9_q2pwx")
 metadata/_custom_type_script = "uid://dudbeybe481tr"
 
 [connection signal="died" from="Hitbox" to="." method="_on_hitbox_died"]
+[connection signal="took_damage" from="Hitbox" to="." method="_on_hitbox_took_damage"]
+[connection signal="area_entered" from="Hurtbox" to="Hurtbox" method="_on_area_entered"]
+[connection signal="parried" from="Hurtbox" to="." method="_on_hurtbox_parried"]
